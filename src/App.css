@@ -162,4 +162,58 @@ section::after {
   section {
     padding: 60px 15px;
   }
+  
+  /* Disable expensive effects on mobile */
+  .app::before,
+  .app::after {
+    filter: none !important;
+    transform-style: flat !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  section::before,
+  section::after {
+    filter: none !important;
+    transform-style: flat !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  /* Simplify animations */
+  @keyframes floatWatermark5D {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(10px, 10px) scale(1.05);
+    }
+  }
+  
+  @keyframes floatWatermark5DGlow {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(15px, 15px) scale(1.1);
+    }
+  }
+  
+  @keyframes sectionLogo5D {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(10px, 10px) scale(1.05);
+    }
+  }
+  
+  @keyframes sectionLogo5DGlow {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(15px, 15px) scale(1.1);
+    }
+  }
 }

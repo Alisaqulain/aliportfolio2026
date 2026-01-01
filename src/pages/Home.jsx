@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Stars } from '@react-three/drei'
 import { motion, useScroll, useTransform } from 'framer-motion'
@@ -22,10 +22,22 @@ const Home = () => {
     triggerOnce: true
   })
 
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end end"],
+    layoutEffect: false
   })
 
   const y = useTransform(scrollYProgress, [0, 1], [0, -200])
@@ -46,24 +58,29 @@ const Home = () => {
       {/* Hero Section - Full Screen */}
       <section id="hero" className="hero-section" ref={ref}>
         <div className="hero-background">
-          <Suspense fallback={null}>
-            <Canvas 
-              camera={{ position: [0, 0, 5], fov: 75 }}
-              gl={{ antialias: true, alpha: true }}
-              onCreated={({ gl }) => {
-                gl.setClearColor('#0a0a0f', 0)
-              }}
-              dpr={[1, 2]}
-            >
-              <ambientLight intensity={0.5} />
-              <pointLight position={[10, 10, 10]} intensity={1} />
-              <pointLight position={[-10, -10, -10]} intensity={0.5} color="#7b2cbf" />
-              <Stars radius={300} depth={60} count={20000} factor={7} fade speed={1} />
-              <ParticleField />
-              <FloatingObjects />
-              <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
-            </Canvas>
-          </Suspense>
+          {!isMobile ? (
+            <Suspense fallback={null}>
+              <Canvas 
+                camera={{ position: [0, 0, 5], fov: 75 }}
+                gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
+                onCreated={({ gl }) => {
+                  gl.setClearColor('#0a0a0f', 0)
+                }}
+                dpr={[1, 1.5]}
+                performance={{ min: 0.5 }}
+              >
+                <ambientLight intensity={0.5} />
+                <pointLight position={[10, 10, 10]} intensity={1} />
+                <pointLight position={[-10, -10, -10]} intensity={0.5} color="#7b2cbf" />
+                <Stars radius={300} depth={60} count={isMobile ? 1000 : 5000} factor={7} fade speed={1} />
+                <ParticleField />
+                <FloatingObjects />
+                <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+              </Canvas>
+            </Suspense>
+          ) : (
+            <div className="hero-background-static" />
+          )}
         </div>
 
         <motion.div 

@@ -1271,6 +1271,73 @@
   .scroll-indicator span {
     font-size: 0.8rem;
   }
+  
+  /* Performance optimizations for mobile */
+  .hero-section {
+    perspective: none !important;
+  }
+  
+  .hero-section::before,
+  .hero-section::after {
+    filter: none !important;
+    transform-style: flat !important;
+    animation: none !important;
+  }
+  
+  .hero-content,
+  .hero-text {
+    transform-style: flat !important;
+  }
+  
+  .hero-badge,
+  .floating-card,
+  .feature-card,
+  .tech-card,
+  .stat-card {
+    backdrop-filter: none !important;
+    filter: none !important;
+    transform-style: flat !important;
+  }
+  
+  /* Simplify 3D transforms on mobile */
+  .hero-badge,
+  .btn,
+  .feature-card,
+  .tech-card,
+  .stat-card,
+  .quick-stat-item {
+    transform: translateZ(0) !important;
+  }
+  
+  /* Disable complex animations */
+  @keyframes heroLogo5D {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(10px, 10px) scale(1.05);
+    }
+  }
+  
+  @keyframes heroLogo5DGlow {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(15px, 15px) scale(1.1);
+    }
+  }
+  
+  /* Static background fallback */
+  .hero-background-static {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+    z-index: 0;
+  }
 }
 
 @media (max-width: 480px) {

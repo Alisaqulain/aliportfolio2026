@@ -10,6 +10,41 @@
   transform-style: preserve-3d;
 }
 
+/* Mobile Performance Optimizations */
+@media (max-width: 768px) {
+  *,
+  *::before,
+  *::after {
+    transform-style: flat !important;
+    will-change: auto !important;
+    backdrop-filter: none !important;
+  }
+  
+  /* Disable expensive blur filters on mobile */
+  * {
+    filter: none !important;
+  }
+  
+  /* Re-enable essential filters only */
+  img,
+  svg {
+    filter: unset !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+  
+  /* GPU acceleration for smooth scrolling */
+  body,
+  #root,
+  .app {
+    transform: translateZ(0);
+    -webkit-overflow-scrolling: touch;
+    contain: layout style paint;
+  }
+}
+
 :root {
   --primary-color: #00d4ff;
   --secondary-color: #7b2cbf;
@@ -46,6 +81,14 @@ body {
   overflow-x: hidden;
   transition: background 0.3s ease, color 0.3s ease;
   perspective: 1000px;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+@media (max-width: 768px) {
+  body {
+    perspective: none;
+  }
 }
 
 /* Ensure theme is set on html element */
