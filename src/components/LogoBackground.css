@@ -1,0 +1,101 @@
+.logo-bg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.logo-bg-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--logo-size, 60%);
+  height: var(--logo-size, 60%);
+  background-image: url('/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transform: translate(-50%, -50%);
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.logo-bg-main {
+  opacity: var(--logo-opacity, 0.05);
+  filter: blur(0px);
+  animation: logoFloat3D 20s ease-in-out infinite;
+  z-index: 1;
+}
+
+.logo-bg-glow {
+  opacity: calc(var(--logo-opacity, 0.05) * 2);
+  filter: blur(30px);
+  z-index: 0;
+  animation: logoGlow3D 15s ease-in-out infinite;
+}
+
+.logo-bg-shadow {
+  opacity: calc(var(--logo-opacity, 0.05) * 0.5);
+  filter: blur(60px);
+  z-index: -1;
+  animation: logoShadow3D 25s ease-in-out infinite;
+}
+
+@keyframes logoFloat3D {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateZ(0) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+  25% {
+    transform: translate(-50%, -50%) translateZ(20px) rotateX(5deg) rotateY(5deg) scale(1.05);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateZ(40px) rotateX(10deg) rotateY(-5deg) scale(1.1);
+  }
+  75% {
+    transform: translate(-50%, -50%) translateZ(20px) rotateX(-5deg) rotateY(5deg) scale(1.05);
+  }
+}
+
+@keyframes logoGlow3D {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateZ(-10px) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+  33% {
+    transform: translate(-50%, -50%) translateZ(10px) rotateX(10deg) rotateY(10deg) scale(1.1);
+  }
+  66% {
+    transform: translate(-50%, -50%) translateZ(20px) rotateX(-10deg) rotateY(-10deg) scale(1.2);
+  }
+}
+
+@keyframes logoShadow3D {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateZ(-30px) rotateX(0deg) rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateZ(-10px) rotateX(15deg) rotateY(15deg) scale(1.2);
+  }
+}
+
+/* Mouse parallax effect */
+.logo-bg-container:hover .logo-bg-main {
+  transition: transform 0.1s ease-out;
+}
+
+@media (max-width: 768px) {
+  .logo-bg-layer {
+    width: 80%;
+    height: 80%;
+  }
+  
+  .logo-bg-main {
+    opacity: calc(var(--logo-opacity, 0.05) * 0.7);
+  }
+}
+

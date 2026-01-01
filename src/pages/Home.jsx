@@ -1,0 +1,521 @@
+import React, { useRef, useEffect } from 'react'
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls, Stars } from '@react-three/drei'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
+import { Link } from 'react-router-dom'
+import { Suspense } from 'react'
+import { 
+  FaArrowDown, FaCode, FaRocket, FaBrain, FaLayerGroup, FaMobile, 
+  FaCloud, FaDatabase, FaCog, FaStar, FaQuoteLeft, FaGithub, 
+  FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaAward,
+  FaUsers, FaProjectDiagram, FaCheckCircle, FaFire
+} from 'react-icons/fa'
+import { SiReact, SiNextdotjs, SiNodedotjs, SiMongodb, SiTypescript, SiPython } from 'react-icons/si'
+import ParticleField from '../components/ParticleField'
+import FloatingObjects from '../components/FloatingObjects'
+import './Home.css'
+
+const Home = () => {
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true
+  })
+
+  const containerRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  })
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, -200])
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
+
+  const technologies = [
+    { icon: <SiReact />, name: 'React', color: '#61dafb' },
+    { icon: <SiNextdotjs />, name: 'Next.js', color: '#000000' },
+    { icon: <SiNodedotjs />, name: 'Node.js', color: '#339933' },
+    { icon: <SiTypescript />, name: 'TypeScript', color: '#3178c6' },
+    { icon: <SiPython />, name: 'Python', color: '#3776ab' },
+    { icon: <SiMongodb />, name: 'MongoDB', color: '#47a248' },
+  ]
+
+  return (
+    <div className="home-page" ref={containerRef}>
+      {/* Hero Section - Full Screen */}
+      <section id="hero" className="hero-section" ref={ref}>
+        <div className="hero-background">
+          <Suspense fallback={null}>
+            <Canvas 
+              camera={{ position: [0, 0, 5], fov: 75 }}
+              gl={{ antialias: true, alpha: true }}
+              onCreated={({ gl }) => {
+                gl.setClearColor('#0a0a0f', 0)
+              }}
+              dpr={[1, 2]}
+            >
+              <ambientLight intensity={0.5} />
+              <pointLight position={[10, 10, 10]} intensity={1} />
+              <pointLight position={[-10, -10, -10]} intensity={0.5} color="#7b2cbf" />
+              <Stars radius={300} depth={60} count={20000} factor={7} fade speed={1} />
+              <ParticleField />
+              <FloatingObjects />
+              <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+            </Canvas>
+          </Suspense>
+        </div>
+
+        <motion.div 
+          className="hero-content"
+          style={{ y, opacity, scale }}
+        >
+          <motion.div
+            className="hero-text"
+            initial={{ opacity: 0, y: 100, z: -100 }}
+            animate={inView ? { opacity: 1, y: 0, z: 0 } : {}}
+            transition={{ duration: 1, delay: 0.2, type: 'spring', stiffness: 100 }}
+          >
+            <motion.div
+              className="hero-badge"
+              initial={{ opacity: 0, scale: 0, rotateX: -90 }}
+              animate={inView ? { opacity: 1, scale: 1, rotateX: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.3, type: 'spring' }}
+            >
+              <FaFire className="badge-icon" />
+              <span>Full-Stack Developer</span>
+            </motion.div>
+
+            <motion.h1
+              className="hero-title"
+              initial={{ opacity: 0, y: 50, z: -50 }}
+              animate={inView ? { opacity: 1, y: 0, z: 0 } : {}}
+              transition={{ duration: 1, delay: 0.4, type: 'spring', stiffness: 80 }}
+            >
+              <span className="gradient-text">Ali Saqulain</span>
+              <br />
+              <motion.span 
+                className="subtitle"
+                initial={{ opacity: 0, x: -50, z: -30 }}
+                animate={inView ? { opacity: 1, x: 0, z: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                Full-Stack Web & App Developer
+              </motion.span>
+            </motion.h1>
+
+            <motion.div
+              className="hero-info"
+              initial={{ opacity: 0, y: 30, z: -20 }}
+              animate={inView ? { opacity: 1, y: 0, z: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.7 }}
+            >
+              <div className="info-grid">
+                <div className="info-item-card">
+                  <FaMapMarkerAlt className="info-icon" />
+                  <div>
+                    <span className="info-label">Location</span>
+                    <span className="info-value">Delhi-NCR</span>
+                  </div>
+                </div>
+                <div className="info-item-card">
+                  <FaPhone className="info-icon" />
+                  <div>
+                    <span className="info-label">Phone</span>
+                    <span className="info-value">+91 9457818861</span>
+                  </div>
+                </div>
+                <div className="info-item-card">
+                  <FaEnvelope className="info-icon" />
+                  <div>
+                    <span className="info-label">Email</span>
+                    <span className="info-value">zaidiali087@gmail.com</span>
+                  </div>
+                </div>
+              </div>
+              <div className="hero-social">
+                <motion.a 
+                  href="https://linkedin.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -3, z: 10 }}
+                  className="social-btn"
+                >
+                  <FaLinkedin />
+                  <span>LinkedIn</span>
+                </motion.a>
+                <motion.a 
+                  href="https://github.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -3, z: 10 }}
+                  className="social-btn"
+                >
+                  <FaGithub />
+                  <span>GitHub</span>
+                </motion.a>
+              </div>
+            </motion.div>
+
+            <motion.p
+              className="hero-description"
+              initial={{ opacity: 0, y: 30, z: -20 }}
+              animate={inView ? { opacity: 1, y: 0, z: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              Crafting immersive digital experiences with cutting-edge technology
+              and innovative design solutions. Building scalable, responsive, and AI-integrated applications
+              that transform ideas into reality.
+            </motion.p>
+
+            <motion.div
+              className="hero-buttons"
+              initial={{ opacity: 0, y: 30, z: -20 }}
+              animate={inView ? { opacity: 1, y: 0, z: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.9 }}
+            >
+              <motion.a
+                href="/projects"
+                className="btn btn-primary"
+                whileHover={{ scale: 1.05, y: -5, z: 15, boxShadow: '0 25px 60px rgba(0, 212, 255, 0.6)' }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span>View Projects</span>
+                <FaRocket className="btn-icon" />
+                <div className="btn-shine"></div>
+              </motion.a>
+              <motion.a
+                href="/contact"
+                className="btn btn-secondary"
+                whileHover={{ scale: 1.05, y: -5, z: 15, boxShadow: '0 25px 60px rgba(123, 44, 191, 0.5)' }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span>Contact Me</span>
+                <FaCode className="btn-icon" />
+                <div className="btn-shine"></div>
+              </motion.a>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            className="hero-visual"
+            initial={{ opacity: 0, x: 100, z: -50 }}
+            animate={inView ? { opacity: 1, x: 0, z: 0 } : {}}
+            transition={{ duration: 1, delay: 0.5, type: 'spring' }}
+          >
+            <div className="floating-card">
+              <div className="card-glow"></div>
+              <div className="card-content">
+                <div className="tech-icons-preview">
+                  {technologies.slice(0, 4).map((tech, idx) => (
+                    <motion.div
+                      key={idx}
+                      className="tech-icon-small"
+                      style={{ color: tech.color }}
+                      animate={{ 
+                        rotate: [0, 360],
+                        y: [0, -10, 0]
+                      }}
+                      transition={{ 
+                        duration: 3 + idx,
+                        repeat: Infinity,
+                        delay: idx * 0.2
+                      }}
+                    >
+                      {tech.icon}
+                    </motion.div>
+                  ))}
+                </div>
+                <FaCode className="card-icon" />
+                <h3>Full-Stack Developer</h3>
+                <p>Building the future, one line of code at a time</p>
+                <div className="card-stats">
+                  <div className="card-stat">
+                    <span className="stat-number">10+</span>
+                    <span className="stat-label">Projects</span>
+                  </div>
+                  <div className="card-stat">
+                    <span className="stat-number">2+</span>
+                    <span className="stat-label">Years</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          className="scroll-indicator"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <FaArrowDown />
+          <span>Scroll to explore</span>
+        </motion.div>
+      </section>
+
+      {/* Quick Stats Bar */}
+      <section className="quick-stats-section">
+        <div className="quick-stats-container">
+          {[
+            { icon: <FaProjectDiagram />, number: '10+', label: 'Projects', color: '#00d4ff' },
+            { icon: <FaUsers />, number: '50+', label: 'Happy Clients', color: '#7b2cbf' },
+            { icon: <FaCode />, number: '15+', label: 'Technologies', color: '#ff006e' },
+            { icon: <FaAward />, number: '100%', label: 'Satisfaction', color: '#00d4ff' }
+          ].map((stat, index) => (
+            <motion.div
+              key={index}
+              className="quick-stat-item"
+              initial={{ opacity: 0, y: 30, z: -50 }}
+              whileInView={{ opacity: 1, y: 0, z: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ scale: 1.1, y: -5, z: 15 }}
+              style={{ '--stat-color': stat.color }}
+            >
+              <div className="quick-stat-icon">{stat.icon}</div>
+              <div className="quick-stat-content">
+                <h3>{stat.number}</h3>
+                <p>{stat.label}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="features-section">
+        <div className="features-container">
+          <motion.div
+            className="features-header"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2>What I Do</h2>
+            <p>Transforming ideas into digital reality with cutting-edge technology</p>
+          </motion.div>
+
+          <div className="features-grid">
+            {[
+              {
+                icon: <FaCode />,
+                title: 'Frontend Development',
+                description: 'Building beautiful, responsive user interfaces with React, Next.js, and modern CSS. Creating pixel-perfect designs that work flawlessly across all devices.',
+                color: '#00d4ff',
+                features: ['React & Next.js', 'Responsive Design', 'Modern UI/UX']
+              },
+              {
+                icon: <FaLayerGroup />,
+                title: 'Backend Development',
+                description: 'Creating robust APIs and server-side solutions with Node.js, Express, and Django. Building scalable architectures that handle millions of requests.',
+                color: '#7b2cbf',
+                features: ['REST APIs', 'Database Design', 'Cloud Services']
+              },
+              {
+                icon: <FaMobile />,
+                title: 'Mobile Development',
+                description: 'Developing cross-platform mobile apps with React Native and Expo. Creating native-like experiences for iOS and Android from a single codebase.',
+                color: '#ff006e',
+                features: ['React Native', 'Cross-Platform', 'App Store Ready']
+              },
+              {
+                icon: <FaBrain />,
+                title: 'AI Integration',
+                description: 'Integrating AI capabilities into applications using OpenAI and machine learning. Building intelligent systems that learn and adapt.',
+                color: '#00d4ff',
+                features: ['OpenAI API', 'ML Models', 'Smart Automation']
+              },
+              {
+                icon: <FaDatabase />,
+                title: 'Database Solutions',
+                description: 'Designing and optimizing databases with MongoDB, MySQL, and Supabase. Ensuring data integrity and performance at scale.',
+                color: '#7b2cbf',
+                features: ['MongoDB', 'SQL Databases', 'Real-time Sync']
+              },
+              {
+                icon: <FaCloud />,
+                title: 'Cloud & DevOps',
+                description: 'Deploying applications to cloud platforms and setting up CI/CD pipelines. Ensuring high availability and scalability.',
+                color: '#ff006e',
+                features: ['AWS', 'Docker', 'CI/CD']
+              }
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                className="feature-card"
+                initial={{ opacity: 0, y: 50, z: -50 }}
+                whileInView={{ opacity: 1, y: 0, z: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  y: -10, 
+                  z: 20,
+                  rotateY: 5,
+                  rotateX: 5
+                }}
+                style={{ 
+                  transformStyle: 'preserve-3d',
+                  '--feature-color': feature.color
+                }}
+              >
+                <div className="feature-icon" style={{ color: feature.color }}>
+                  {feature.icon}
+                </div>
+                <h3>{feature.title}</h3>
+                <p>{feature.description}</p>
+                <div className="feature-tags">
+                  {feature.features.map((tag, idx) => (
+                    <span key={idx} className="feature-tag">{tag}</span>
+                  ))}
+                </div>
+                <div className="feature-glow"></div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Technologies Section */}
+      <section className="technologies-section">
+        <div className="technologies-container">
+          <motion.div
+            className="technologies-header"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2>Technologies I Work With</h2>
+            <p>Mastering the tools that power modern web applications</p>
+          </motion.div>
+
+          <div className="technologies-grid">
+            {technologies.map((tech, index) => (
+              <motion.div
+                key={index}
+                className="tech-card"
+                initial={{ opacity: 0, scale: 0, z: -100 }}
+                whileInView={{ opacity: 1, scale: 1, z: 0 }}
+                viewport={{ once: true }}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: index * 0.1,
+                  type: 'spring',
+                  stiffness: 100
+                }}
+                whileHover={{ 
+                  scale: 1.2, 
+                  y: -15, 
+                  z: 30,
+                  rotateY: 360
+                }}
+                style={{ 
+                  transformStyle: 'preserve-3d',
+                  color: tech.color
+                }}
+              >
+                <div className="tech-icon-large">
+                  {tech.icon}
+                </div>
+                <span className="tech-name">{tech.name}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="stats-section">
+        <div className="stats-container">
+          <motion.div
+            className="stats-header"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2>By The Numbers</h2>
+            <p>Results that speak for themselves</p>
+          </motion.div>
+
+          <div className="stats-grid">
+            {[
+              { number: '10+', label: 'Projects Completed', icon: <FaRocket />, description: 'Successfully delivered projects' },
+              { number: '2+', label: 'Years Experience', icon: <FaCode />, description: 'Building amazing products' },
+              { number: '15+', label: 'Technologies', icon: <FaLayerGroup />, description: 'Mastered and ready to use' },
+              { number: '100%', label: 'Client Satisfaction', icon: <FaBrain />, description: 'Happy clients worldwide' }
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                className="stat-card"
+                initial={{ opacity: 0, scale: 0, z: -100 }}
+                whileInView={{ opacity: 1, scale: 1, z: 0 }}
+                viewport={{ once: true }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: index * 0.1,
+                  type: 'spring',
+                  stiffness: 100
+                }}
+                whileHover={{ 
+                  scale: 1.1, 
+                  y: -10, 
+                  z: 30,
+                  rotateY: 10
+                }}
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                <div className="stat-icon">{stat.icon}</div>
+                <h3>{stat.number}</h3>
+                <p className="stat-label">{stat.label}</p>
+                <p className="stat-description">{stat.description}</p>
+                <div className="stat-glow"></div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="cta-section">
+        <div className="cta-container">
+          <motion.div
+            className="cta-content"
+            initial={{ opacity: 0, y: 50, z: -50 }}
+            whileInView={{ opacity: 1, y: 0, z: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2>Ready to Build Something Amazing?</h2>
+            <p>Let's collaborate and turn your vision into reality</p>
+            <div className="cta-buttons">
+              <motion.a
+                href="/projects"
+                className="cta-btn cta-primary"
+                whileHover={{ scale: 1.05, y: -5, z: 15 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span>View My Work</span>
+                <FaRocket />
+              </motion.a>
+              <motion.a
+                href="/contact"
+                className="cta-btn cta-secondary"
+                whileHover={{ scale: 1.05, y: -5, z: 15 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span>Get In Touch</span>
+                <FaEnvelope />
+              </motion.a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+export default Home

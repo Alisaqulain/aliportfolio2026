@@ -1,0 +1,52 @@
+@import '../components/Contact.css';
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.contact-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.contact-detail-item:hover {
+  border-color: var(--primary-color);
+  transform: translateX(5px);
+}
+
+.detail-icon {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  min-width: 30px;
+}
+
+.contact-detail-item h4 {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0 0 5px 0;
+  font-weight: 600;
+}
+
+.contact-detail-item p,
+.contact-detail-item a {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin: 0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-detail-item a:hover {
+  color: var(--primary-color);
+}
+
