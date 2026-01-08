@@ -27,3 +27,5 @@ const SkillBar = ({ skill, index, inView }) => {
 
 export default SkillBar
 
+
+

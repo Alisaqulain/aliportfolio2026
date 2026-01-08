@@ -9,7 +9,8 @@ import {
   FaArrowDown, FaCode, FaRocket, FaBrain, FaLayerGroup, FaMobile, 
   FaCloud, FaDatabase, FaCog, FaStar, FaQuoteLeft, FaGithub, 
   FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt, FaAward,
-  FaUsers, FaProjectDiagram, FaCheckCircle, FaFire
+  FaUsers, FaProjectDiagram, FaCheckCircle, FaFire, FaClock,
+  FaBriefcase, FaGraduationCap, FaTrophy, FaHandshake, FaThumbsUp
 } from 'react-icons/fa'
 import { SiReact, SiNextdotjs, SiNodedotjs, SiMongodb, SiTypescript, SiPython } from 'react-icons/si'
 import ParticleField from '../components/ParticleField'
@@ -23,6 +24,7 @@ const Home = () => {
   })
 
   const [isMobile, setIsMobile] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -31,6 +33,14 @@ const Home = () => {
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useEffect(() => {
+    // Simulate loading for better UX
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 500)
+    return () => clearTimeout(timer)
   }, [])
 
   const containerRef = useRef(null)
@@ -43,6 +53,10 @@ const Home = () => {
   const y = useTransform(scrollYProgress, [0, 1], [0, -200])
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
+  
+  // Scroll progress for top indicator
+  const { scrollYProgress: pageScrollProgress } = useScroll()
+  const scrollProgressWidth = useTransform(pageScrollProgress, [0, 1], ['0%', '100%'])
 
   const technologies = [
     { icon: <SiReact />, name: 'React', color: '#61dafb' },
@@ -53,10 +67,45 @@ const Home = () => {
     { icon: <SiMongodb />, name: 'MongoDB', color: '#47a248' },
   ]
 
+  if (isLoading) {
+    return (
+      <div className="loading-screen">
+        <motion.div
+          className="loading-content"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.div
+            className="loading-spinner"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+          >
+            <FaCode />
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="loading-text"
+          >
+            Loading Portfolio...
+          </motion.h2>
+        </motion.div>
+      </div>
+    )
+  }
+
   return (
     <div className="home-page" ref={containerRef}>
+      {/* Scroll Progress Indicator */}
+      <motion.div 
+        className="scroll-progress-bar"
+        style={{ width: scrollProgressWidth }}
+      />
+      
       {/* Hero Section - Full Screen */}
-      <section id="hero" className="hero-section" ref={ref}>
+      <section id="hero" className="hero-section" ref={ref} aria-label="Hero Section">
         <div className="hero-background">
           {!isMobile ? (
             <Suspense fallback={null}>
@@ -272,7 +321,7 @@ const Home = () => {
       </section>
 
       {/* Quick Stats Bar */}
-      <section className="quick-stats-section">
+      <section className="quick-stats-section" aria-label="Quick Statistics">
         <div className="quick-stats-container">
           {[
             { icon: <FaProjectDiagram />, number: '10+', label: 'Projects', color: '#00d4ff' },
@@ -301,7 +350,7 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="features-section">
+      <section className="features-section" aria-label="Services and Features">
         <div className="features-container">
           <motion.div
             className="features-header"
@@ -396,7 +445,7 @@ const Home = () => {
       </section>
 
       {/* Technologies Section */}
-      <section className="technologies-section">
+      <section className="technologies-section" aria-label="Technologies">
         <div className="technologies-container">
           <motion.div
             className="technologies-header"
@@ -445,7 +494,7 @@ const Home = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="stats-section">
+      <section className="stats-section" aria-label="Statistics">
         <div className="stats-container">
           <motion.div
             className="stats-header"
@@ -496,8 +545,168 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Timeline/Experience Preview Section */}
+      <section className="timeline-section" aria-label="Experience Timeline">
+        <div className="timeline-container">
+          <motion.div
+            className="timeline-header"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2>My Journey</h2>
+            <p>From learning to leading - a timeline of growth and achievements</p>
+          </motion.div>
+
+          <div className="timeline-wrapper">
+            {[
+              {
+                year: '2024',
+                title: 'Full-Stack Developer',
+                company: 'Freelance & Projects',
+                description: 'Building scalable web applications and mobile apps with modern technologies. Specializing in React, Node.js, and AI integration.',
+                icon: <FaCode />,
+                color: '#00d4ff',
+                achievements: ['10+ Projects Completed', 'AI Integration Expertise', 'Client Satisfaction 100%']
+              },
+              {
+                year: '2023',
+                title: 'Web Developer',
+                company: 'Self-Taught Journey',
+                description: 'Mastered frontend and backend technologies. Built multiple full-stack applications and contributed to open-source projects.',
+                icon: <FaRocket />,
+                color: '#7b2cbf',
+                achievements: ['React & Next.js Mastery', 'Backend Development', 'Database Design']
+              },
+              {
+                year: '2022',
+                title: 'Started Learning',
+                company: 'Coding Journey Begins',
+                description: 'Began my journey into web development. Learned fundamentals of HTML, CSS, JavaScript, and modern frameworks.',
+                icon: <FaGraduationCap />,
+                color: '#ff006e',
+                achievements: ['JavaScript Fundamentals', 'Frontend Basics', 'First Projects']
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                className="timeline-item"
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                whileHover={{ scale: 1.05, y: -10, z: 20 }}
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                <div className="timeline-marker" style={{ '--timeline-color': item.color }}>
+                  <div className="timeline-icon">{item.icon}</div>
+                </div>
+                <div className="timeline-content">
+                  <div className="timeline-year">{item.year}</div>
+                  <h3>{item.title}</h3>
+                  <p className="timeline-company">{item.company}</p>
+                  <p className="timeline-description">{item.description}</p>
+                  <div className="timeline-achievements">
+                    {item.achievements.map((achievement, idx) => (
+                      <span key={idx} className="achievement-badge">
+                        <FaCheckCircle /> {achievement}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="testimonials-section" aria-label="Client Testimonials">
+        <div className="testimonials-container">
+          <motion.div
+            className="testimonials-header"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2>What Clients Say</h2>
+            <p>Real feedback from real projects</p>
+          </motion.div>
+
+          <div className="testimonials-grid">
+            {[
+              {
+                name: 'Sarah Johnson',
+                role: 'CEO, TechStart Inc.',
+                content: 'Ali delivered an exceptional web application that exceeded our expectations. His attention to detail and technical expertise is outstanding. Highly recommended!',
+                rating: 5,
+                project: 'E-commerce Platform',
+                avatar: 'SJ'
+              },
+              {
+                name: 'Michael Chen',
+                role: 'Founder, Digital Solutions',
+                content: 'Working with Ali was a pleasure. He transformed our vision into a beautiful, functional mobile app. The project was completed on time and within budget.',
+                rating: 5,
+                project: 'Mobile App Development',
+                avatar: 'MC'
+              },
+              {
+                name: 'Emily Rodriguez',
+                role: 'Product Manager, InnovateCo',
+                content: 'Ali\'s full-stack development skills are impressive. He built a scalable backend and a stunning frontend. The AI integration he added was the perfect touch!',
+                rating: 5,
+                project: 'AI-Powered Dashboard',
+                avatar: 'ER'
+              }
+            ].map((testimonial, index) => (
+              <motion.div
+                key={index}
+                className="testimonial-card"
+                initial={{ opacity: 0, y: 50, z: -50 }}
+                whileInView={{ opacity: 1, y: 0, z: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  y: -10, 
+                  z: 20,
+                  rotateY: 5
+                }}
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                <div className="testimonial-header">
+                  <div className="testimonial-avatar">
+                    {testimonial.avatar}
+                  </div>
+                  <div className="testimonial-info">
+                    <h4>{testimonial.name}</h4>
+                    <p>{testimonial.role}</p>
+                    <div className="testimonial-rating">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <FaStar key={i} className="star-icon" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="testimonial-quote">
+                  <FaQuoteLeft className="quote-icon" />
+                  <p>{testimonial.content}</p>
+                </div>
+                <div className="testimonial-project">
+                  <FaProjectDiagram /> {testimonial.project}
+                </div>
+                <div className="testimonial-glow"></div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
-      <section className="cta-section">
+      <section className="cta-section" aria-label="Call to Action">
         <div className="cta-container">
           <motion.div
             className="cta-content"
@@ -506,8 +715,36 @@ const Home = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
+            <motion.div
+              className="cta-icon"
+              animate={{ 
+                rotate: [0, 10, -10, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 3,
+                repeat: Infinity,
+                ease: 'easeInOut'
+              }}
+            >
+              <FaHandshake />
+            </motion.div>
             <h2>Ready to Build Something Amazing?</h2>
-            <p>Let's collaborate and turn your vision into reality</p>
+            <p>Let's collaborate and turn your vision into reality. I'm here to help you create something extraordinary.</p>
+            <div className="cta-stats">
+              <div className="cta-stat">
+                <FaThumbsUp />
+                <span>100% Satisfaction</span>
+              </div>
+              <div className="cta-stat">
+                <FaClock />
+                <span>On-Time Delivery</span>
+              </div>
+              <div className="cta-stat">
+                <FaTrophy />
+                <span>Quality Guaranteed</span>
+              </div>
+            </div>
             <div className="cta-buttons">
               <motion.a
                 href="/projects"

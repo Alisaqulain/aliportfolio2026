@@ -116,3 +116,5 @@ const ProjectCard = ({ project, index, inView }) => {
 
 export default ProjectCard
 
+
+

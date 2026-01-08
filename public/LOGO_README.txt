@@ -11,3 +11,5 @@ Recommended logo specifications:
 - Size: 512x512px or larger (square format preferred)
 - File name: logo.png (exact name required)
 
+
+
