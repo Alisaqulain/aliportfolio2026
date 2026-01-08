@@ -12,17 +12,32 @@ const Experience = () => {
 
   const experiences = [
     {
+      company: 'Bizsun Creative',
+      role: 'Full-Stack Developer',
+      period: 'December 2024 – Present',
+      location: 'Remote',
+      description: [
+        'Working on client-based web and mobile application projects.',
+        'Developing scalable solutions using Next.js, React, Node.js, MongoDB, and Supabase.',
+        'Collaborating with design and marketing teams to deliver high-performance, SEO-optimized products.',
+        'Handling end-to-end development, from requirement analysis to deployment.'
+      ],
+      technologies: ['Next.js', 'React', 'Node.js', 'MongoDB', 'Supabase', 'React Native'],
+      logo: '💼',
+      type: 'work'
+    },
+    {
       company: 'Genex Corporate Services',
       role: 'Full-Stack Developer Intern (Full-Time)',
-      period: 'March 2025 - Present',
+      period: 'March 2024 – November 2024',
       location: 'Remote',
       description: [
         'Developed GenBore and Vorksinta company websites using React.js as solo projects.',
-        'Contributed to the Internsta platform (similar to Internshala), initially built with Next.js, later migrated to Django.',
-        'Worked collaboratively on front-end, backend, and deployment-ready features.'
+        'Contributed to the Internsta platform (Internshala-like system), initially built with Next.js, later migrated to Django.',
+        'Worked on frontend, backend, APIs, and deployment-ready features in a collaborative environment.'
       ],
-      technologies: ['React.js', 'Next.js', 'Django', 'Python', 'Node.js'],
-      logo: '💼',
+      technologies: ['React.js', 'Next.js', 'Django', 'Python', 'Node.js', 'Express'],
+      logo: '🚀',
       type: 'work'
     },
     {

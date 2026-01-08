@@ -42,8 +42,8 @@ const Contact = () => {
   }
 
   const socialLinks = [
-    { icon: <FaLinkedin />, label: 'LinkedIn', url: 'https://linkedin.com', color: '#0077b5' },
-    { icon: <FaGithub />, label: 'GitHub', url: 'https://github.com', color: '#333' },
+    { icon: <FaLinkedin />, label: 'LinkedIn', url: 'https://www.linkedin.com/in/ali-saqulain-7404a8287', color: '#0077b5' },
+    { icon: <FaGithub />, label: 'GitHub', url: 'https://github.com/Alisaqulain', color: '#333' },
     { icon: <FaEnvelope />, label: 'Email', url: 'mailto:zaidiali087@gmail.com', color: '#ea4335' },
     { icon: <FaPhone />, label: 'Phone', url: 'tel:+919457818861', color: '#34a853' }
   ]

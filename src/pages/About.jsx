@@ -94,7 +94,7 @@ const About = () => {
               <div className="avatar-stats">
                 <div className="avatar-stat">
                   <FaRocket />
-                  <span>10+ Projects</span>
+                  <span>15+ Projects</span>
                 </div>
                 <div className="avatar-stat">
                   <FaAward />
@@ -112,14 +112,15 @@ const About = () => {
             >
               <h3>Full-Stack Web & App Developer</h3>
               <p>
-                Full-Stack Web & App Developer with hands-on experience in Next.js, React, Node.js, 
-                MongoDB, Supabase, and React Native. Skilled in building scalable, responsive, and 
-                AI-integrated applications. Strong in problem-solving, API development, and delivering 
-                efficient, production-ready solutions as part of a collaborative team.
+                Full-Stack Web & Mobile App Developer with hands-on experience in Next.js, React, Node.js, 
+                MongoDB, Supabase, and React Native. Strong foundation in Data Structures & Algorithms (DSA) 
+                with proven problem-solving abilities. Skilled in building scalable, responsive, and 
+                AI-integrated applications, developing robust REST APIs, and delivering production-ready solutions.
               </p>
               <p>
-                With a strong foundation in both frontend and backend technologies, I create
-                seamless digital experiences that combine beautiful design with robust functionality.
+                Experienced in collaborating with cross-functional teams to design, develop, and deploy 
+                high-performance applications. Passionate about creating seamless digital experiences that 
+                combine beautiful design with robust functionality.
               </p>
             </motion.div>
 
@@ -137,11 +138,12 @@ const About = () => {
               </h4>
               <div className="achievements-list">
                 {[
-                  { icon: <FaCheckCircle />, text: 'Built 10+ Production Applications' },
+                  { icon: <FaCheckCircle />, text: 'Built 15+ Production Applications' },
                   { icon: <FaCheckCircle />, text: 'AI-Integrated Solutions Expert' },
                   { icon: <FaCheckCircle />, text: 'Full-Stack Development Specialist' },
-                  { icon: <FaCheckCircle />, text: 'Mobile App Development' },
-                  { icon: <FaCheckCircle />, text: 'Real-time Communication Systems' }
+                  { icon: <FaCheckCircle />, text: 'Mobile App Development (React Native)' },
+                  { icon: <FaCheckCircle />, text: 'Real-time Communication Systems (WebRTC)' },
+                  { icon: <FaCheckCircle />, text: 'Strong DSA & Problem-Solving Skills' }
                 ].map((achievement, idx) => (
                   <motion.div
                     key={idx}
@@ -193,8 +195,8 @@ const About = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
             >
               {[
-                { icon: <FaCode />, number: '15+', label: 'Tech Stack', color: '#00d4ff' },
-                { icon: <FaRocket />, number: '10+', label: 'Projects', color: '#7b2cbf' },
+                { icon: <FaCode />, number: '18+', label: 'Tech Stack', color: '#00d4ff' },
+                { icon: <FaRocket />, number: '15+', label: 'Projects', color: '#7b2cbf' },
                 { icon: <FaAward />, number: '2+', label: 'Years Exp', color: '#ff006e' }
               ].map((stat, idx) => (
                 <motion.div

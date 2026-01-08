@@ -12,7 +12,11 @@ import {
   FaUsers, FaProjectDiagram, FaCheckCircle, FaFire, FaClock,
   FaBriefcase, FaGraduationCap, FaTrophy, FaHandshake, FaThumbsUp
 } from 'react-icons/fa'
-import { SiReact, SiNextdotjs, SiNodedotjs, SiMongodb, SiTypescript, SiPython } from 'react-icons/si'
+import { 
+  SiReact, SiNextdotjs, SiNodedotjs, SiMongodb, SiTypescript, SiPython,
+  SiJavascript, SiHtml5, SiCss3, SiBootstrap, SiTailwindcss, SiExpress,
+  SiMysql, SiSupabase, SiFirebase, SiGit, SiGithub, SiDjango, SiExpo
+} from 'react-icons/si'
 import ParticleField from '../components/ParticleField'
 import FloatingObjects from '../components/FloatingObjects'
 import './Home.css'
@@ -62,9 +66,21 @@ const Home = () => {
     { icon: <SiReact />, name: 'React', color: '#61dafb' },
     { icon: <SiNextdotjs />, name: 'Next.js', color: '#000000' },
     { icon: <SiNodedotjs />, name: 'Node.js', color: '#339933' },
+    { icon: <SiJavascript />, name: 'JavaScript', color: '#f7df1e' },
     { icon: <SiTypescript />, name: 'TypeScript', color: '#3178c6' },
-    { icon: <SiPython />, name: 'Python', color: '#3776ab' },
+    { icon: <SiHtml5 />, name: 'HTML5', color: '#e34f26' },
+    { icon: <SiCss3 />, name: 'CSS3', color: '#1572b6' },
+    { icon: <SiBootstrap />, name: 'Bootstrap', color: '#7952b3' },
+    { icon: <SiTailwindcss />, name: 'Tailwind CSS', color: '#06b6d4' },
+    { icon: <SiExpress />, name: 'Express.js', color: '#000000' },
     { icon: <SiMongodb />, name: 'MongoDB', color: '#47a248' },
+    { icon: <SiMysql />, name: 'MySQL', color: '#4479a1' },
+    { icon: <SiSupabase />, name: 'Supabase', color: '#3ecf8e' },
+    { icon: <SiFirebase />, name: 'Firebase', color: '#ffca28' },
+    { icon: <SiPython />, name: 'Python', color: '#3776ab' },
+    { icon: <SiDjango />, name: 'Django', color: '#092e20' },
+    { icon: <SiExpo />, name: 'React Native', color: '#000020' },
+    { icon: <SiGithub />, name: 'Git/GitHub', color: '#181717' },
   ]
 
   if (isLoading) {
@@ -201,7 +217,7 @@ const Home = () => {
               </div>
               <div className="hero-social">
                 <motion.a 
-                  href="https://linkedin.com" 
+                  href="https://www.linkedin.com/in/ali-saqulain-7404a8287" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -3, z: 10 }}
@@ -211,7 +227,7 @@ const Home = () => {
                   <span>LinkedIn</span>
                 </motion.a>
                 <motion.a 
-                  href="https://github.com" 
+                  href="https://github.com/Alisaqulain" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -3, z: 10 }}
@@ -229,9 +245,9 @@ const Home = () => {
               animate={inView ? { opacity: 1, y: 0, z: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              Crafting immersive digital experiences with cutting-edge technology
-              and innovative design solutions. Building scalable, responsive, and AI-integrated applications
-              that transform ideas into reality.
+              Full-Stack Web & Mobile App Developer with hands-on experience in Next.js, React, Node.js, MongoDB, Supabase, and React Native. 
+              Strong foundation in Data Structures & Algorithms (DSA) with proven problem-solving abilities. 
+              Skilled in building scalable, responsive, and AI-integrated applications, developing robust REST APIs, and delivering production-ready solutions.
             </motion.p>
 
             <motion.div
@@ -297,7 +313,7 @@ const Home = () => {
                 <p>Building the future, one line of code at a time</p>
                 <div className="card-stats">
                   <div className="card-stat">
-                    <span className="stat-number">10+</span>
+                    <span className="stat-number">15+</span>
                     <span className="stat-label">Projects</span>
                   </div>
                   <div className="card-stat">
@@ -324,9 +340,9 @@ const Home = () => {
       <section className="quick-stats-section" aria-label="Quick Statistics">
         <div className="quick-stats-container">
           {[
-            { icon: <FaProjectDiagram />, number: '10+', label: 'Projects', color: '#00d4ff' },
-            { icon: <FaUsers />, number: '50+', label: 'Happy Clients', color: '#7b2cbf' },
-            { icon: <FaCode />, number: '15+', label: 'Technologies', color: '#ff006e' },
+            { icon: <FaProjectDiagram />, number: '15+', label: 'Projects', color: '#00d4ff' },
+            { icon: <FaUsers />, number: '10+', label: 'Happy Clients', color: '#7b2cbf' },
+            { icon: <FaCode />, number: '18+', label: 'Technologies', color: '#ff006e' },
             { icon: <FaAward />, number: '100%', label: 'Satisfaction', color: '#00d4ff' }
           ].map((stat, index) => (
             <motion.div
@@ -509,9 +525,9 @@ const Home = () => {
 
           <div className="stats-grid">
             {[
-              { number: '10+', label: 'Projects Completed', icon: <FaRocket />, description: 'Successfully delivered projects' },
+              { number: '15+', label: 'Projects Completed', icon: <FaRocket />, description: 'Successfully delivered projects' },
               { number: '2+', label: 'Years Experience', icon: <FaCode />, description: 'Building amazing products' },
-              { number: '15+', label: 'Technologies', icon: <FaLayerGroup />, description: 'Mastered and ready to use' },
+              { number: '18+', label: 'Technologies', icon: <FaLayerGroup />, description: 'Mastered and ready to use' },
               { number: '100%', label: 'Client Satisfaction', icon: <FaBrain />, description: 'Happy clients worldwide' }
             ].map((stat, index) => (
               <motion.div
@@ -562,31 +578,40 @@ const Home = () => {
           <div className="timeline-wrapper">
             {[
               {
-                year: '2024',
+                year: '2025',
                 title: 'Full-Stack Developer',
-                company: 'Freelance & Projects',
-                description: 'Building scalable web applications and mobile apps with modern technologies. Specializing in React, Node.js, and AI integration.',
-                icon: <FaCode />,
+                company: 'Bizsun Creative',
+                description: 'Working on client-based web and mobile application projects. Developing scalable solutions using Next.js, React, Node.js, MongoDB, and Supabase. Collaborating with design and marketing teams to deliver high-performance, SEO-optimized products.',
+                icon: <FaBriefcase />,
                 color: '#00d4ff',
-                achievements: ['10+ Projects Completed', 'AI Integration Expertise', 'Client Satisfaction 100%']
+                achievements: ['Client Projects', 'Scalable Solutions', 'SEO Optimization']
               },
               {
-                year: '2023',
-                title: 'Web Developer',
-                company: 'Self-Taught Journey',
-                description: 'Mastered frontend and backend technologies. Built multiple full-stack applications and contributed to open-source projects.',
-                icon: <FaRocket />,
+                year: '2024-2025',
+                title: 'Full-Stack Developer Intern',
+                company: 'Genex Corporate Services (Remote)',
+                description: 'Developed GenBore and Vorksinta company websites using React.js as solo projects. Contributed to Internsta platform, initially built with Next.js, later migrated to Django. Worked on frontend, backend, APIs, and deployment-ready features.',
+                icon: <FaCode />,
                 color: '#7b2cbf',
-                achievements: ['React & Next.js Mastery', 'Backend Development', 'Database Design']
+                achievements: ['React.js Projects', 'Django Migration', 'Full-Stack Development']
               },
               {
-                year: '2022',
-                title: 'Started Learning',
-                company: 'Coding Journey Begins',
-                description: 'Began my journey into web development. Learned fundamentals of HTML, CSS, JavaScript, and modern frameworks.',
+                year: '2023-Present',
+                title: 'Computer Programming Instructor',
+                company: 'Yash Computer Education Center',
+                description: 'Instructing students in programming languages including HTML5, CSS3, JavaScript, C and C++. Designing and conducting hands-on coding exercises and project-based learning sessions.',
                 icon: <FaGraduationCap />,
                 color: '#ff006e',
-                achievements: ['JavaScript Fundamentals', 'Frontend Basics', 'First Projects']
+                achievements: ['Teaching Experience', 'Student Mentorship', 'Curriculum Design']
+              },
+              {
+                year: '2023-Present',
+                title: 'Bachelor of Computer Application',
+                company: 'Muzaffarnagar',
+                description: 'Pursuing BCA degree while building real-world projects and gaining professional experience. Strong foundation in Data Structures & Algorithms.',
+                icon: <FaGraduationCap />,
+                color: '#00d4ff',
+                achievements: ['DSA Expertise', 'Academic Excellence', 'Practical Learning']
               }
             ].map((item, index) => (
               <motion.div
