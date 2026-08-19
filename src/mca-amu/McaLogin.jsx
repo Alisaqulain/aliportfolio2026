@@ -31,7 +31,7 @@ const McaLogin = ({ onLoginSuccess }) => {
       onLoginSuccess()
     } catch (err) {
       if (err.code === 'NETWORK' || err.code === 'OFFLINE') {
-        setError('Server offline. Run npm run dev (starts both Next.js + MCA API).')
+        setError('Unable to reach the MCA API. On Vercel, add MCA env vars and redeploy — no separate server is needed.')
       } else if (err.code === 'AUTH') {
         setError('Invalid password. Try again.')
       } else {

@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/api/mca/:path*",
-      "destination": "/api/mca-router"
+      "destination": "/api/mca-router?path=:path*"
     }
   ],
   "functions": {

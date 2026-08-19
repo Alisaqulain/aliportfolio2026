@@ -34,7 +34,7 @@ async function request(path, options = {}) {
     const isOffline = response.status >= 500 && !data.error
     if (isOffline) {
       throw new McaApiError(
-        'Server offline. Run npm run dev to start Next.js and the MCA API together.',
+        'Unable to reach the MCA API. Check Vercel env vars and redeploy.',
         'OFFLINE'
       )
     }
