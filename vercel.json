@@ -1,7 +1,13 @@
 {
   "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/api/mca/:path*",
+      "destination": "/api/mca-router"
+    }
+  ],
   "functions": {
-    "api/mca/[...path].js": {
+    "api/mca-router.js": {
       "maxDuration": 60,
       "memory": 1024
     }

@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
 import { clientProjects } from '@/data/clients'
 import { CLIENT_VISUALS } from '@/lib/visuals'
@@ -36,7 +35,7 @@ export function ClientProjects() {
                         {project.website.replace('https://', '')}
                       </p>
                     </div>
-                    <Link
+                    <a
                       href={project.website}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -44,7 +43,7 @@ export function ClientProjects() {
                       aria-label={`Visit ${project.name}`}
                     >
                       <ExternalLink size={16} />
-                    </Link>
+                    </a>
                   </div>
                 </div>
 

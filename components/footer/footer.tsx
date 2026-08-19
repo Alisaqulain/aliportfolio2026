@@ -23,8 +23,8 @@ export function Footer() {
             ))}
           </div>
           <div className="space-y-2">
-            <Link href={SOCIAL.github} target="_blank" rel="noopener noreferrer" className="block text-muted transition-colors hover:text-foreground">GitHub</Link>
-            <Link href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" className="block text-muted transition-colors hover:text-foreground">LinkedIn</Link>
+            <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer" className="block text-muted transition-colors hover:text-foreground">GitHub</a>
+            <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" className="block text-muted transition-colors hover:text-foreground">LinkedIn</a>
             <a href={`mailto:${SITE.email}`} className="block text-muted transition-colors hover:text-foreground">Email</a>
           </div>
         </div>

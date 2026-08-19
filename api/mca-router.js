@@ -30,9 +30,10 @@ const routes = {
 }
 
 function resolvePath(req) {
-  const segments = req.query.path
-  if (Array.isArray(segments)) return segments.join('/')
-  return segments || ''
+  const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`)
+  const prefix = '/api/mca/'
+  if (!url.pathname.startsWith(prefix)) return ''
+  return url.pathname.slice(prefix.length)
 }
 
 export default async function handler(req, res) {

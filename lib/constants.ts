@@ -1,3 +1,8 @@
+function readPublicEnv(name: string, fallback: string) {
+  const value = process.env[name]?.trim()
+  return value || fallback
+}
+
 export const SITE = {
   name: 'Ali Saqulain',
   title: 'Forward Deployed Engineer',
@@ -5,14 +10,14 @@ export const SITE = {
   location: 'Delhi-NCR, India',
   phone: '+91 9457818861',
   email: 'zaidiali087@gmail.com',
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aliportfolio2026.vercel.app',
+  url: readPublicEnv('NEXT_PUBLIC_SITE_URL', 'https://aliportfolio2026.vercel.app'),
   availabilityStatus: 'Building production systems',
   availableForFreelance: false,
 } as const
 
 export const SOCIAL = {
-  github: process.env.NEXT_PUBLIC_GITHUB_URL ?? 'https://github.com/PLACEHOLDER_GITHUB',
-  linkedin: process.env.NEXT_PUBLIC_LINKEDIN_URL ?? 'https://linkedin.com/in/PLACEHOLDER_LINKEDIN',
+  github: readPublicEnv('NEXT_PUBLIC_GITHUB_URL', 'https://github.com/PLACEHOLDER_GITHUB'),
+  linkedin: readPublicEnv('NEXT_PUBLIC_LINKEDIN_URL', 'https://linkedin.com/in/PLACEHOLDER_LINKEDIN'),
 } as const
 
 export const SEO = {

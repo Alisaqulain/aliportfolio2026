@@ -19,7 +19,7 @@ export function Button({ href, children, variant = 'primary', className, externa
     className,
   )
 
-  if (external) {
+  if (/^https?:/.test(href) || external) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={styles} onClick={onClick}>
         {children}
@@ -27,7 +27,7 @@ export function Button({ href, children, variant = 'primary', className, externa
     )
   }
 
-  if (href.startsWith('#')) {
+  if (href.startsWith('#') || /^(mailto:|tel:)/.test(href)) {
     return (
       <a href={href} className={styles} onClick={onClick}>
         {children}

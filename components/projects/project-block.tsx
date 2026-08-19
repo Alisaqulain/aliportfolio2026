@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { ExternalLink, Github } from 'lucide-react'
 import type { Project } from '@/data/projects'
 import { getProjectVisual } from '@/lib/visuals'
@@ -50,24 +49,24 @@ export function ProjectBlock({ project }: { project: Project }) {
 
       <div className="flex items-start gap-3 lg:flex-col">
         {project.github && (
-          <Link
+          <a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-sm text-muted transition-colors hover:text-foreground"
           >
             <Github size={14} /> GitHub
-          </Link>
+          </a>
         )}
         {project.liveUrl && (
-          <Link
+          <a
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-sm text-muted transition-colors hover:text-foreground"
           >
             <ExternalLink size={14} /> Live Demo
-          </Link>
+          </a>
         )}
       </div>
     </article>
