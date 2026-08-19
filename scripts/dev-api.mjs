@@ -32,19 +32,19 @@ loadEnvFile(join(root, '.env.local'))
 loadEnvFile(join(root, '.env'))
 
 const routes = {
-  'POST /api/mca/auth/login': '../api/mca/auth/login.js',
-  'POST /api/mca/auth/logout': '../api/mca/auth/logout.js',
-  'GET /api/mca/auth/session': '../api/mca/auth/session.js',
-  'GET /api/mca/drive/files': '../api/mca/drive/files.js',
-  'GET /api/mca/drive/search': '../api/mca/drive/search.js',
-  'POST /api/mca/drive/folder': '../api/mca/drive/folder.js',
-  'PATCH /api/mca/drive/rename': '../api/mca/drive/rename.js',
-  'DELETE /api/mca/drive/delete': '../api/mca/drive/delete.js',
-  'POST /api/mca/drive/upload': '../api/mca/drive/upload.js',
-  'GET /api/mca/drive/download': '../api/mca/drive/download.js',
-  'GET /api/mca/google/auth': '../api/mca/google/auth.js',
-  'GET /api/mca/google/callback': '../api/mca/google/callback.js',
-  'GET /api/mca/check': '../api/mca/check.js',
+  'POST /api/mca/auth/login': '../api/_handlers/auth/login.js',
+  'POST /api/mca/auth/logout': '../api/_handlers/auth/logout.js',
+  'GET /api/mca/auth/session': '../api/_handlers/auth/session.js',
+  'GET /api/mca/drive/files': '../api/_handlers/drive/files.js',
+  'GET /api/mca/drive/search': '../api/_handlers/drive/search.js',
+  'POST /api/mca/drive/folder': '../api/_handlers/drive/folder.js',
+  'PATCH /api/mca/drive/rename': '../api/_handlers/drive/rename.js',
+  'DELETE /api/mca/drive/delete': '../api/_handlers/drive/delete.js',
+  'POST /api/mca/drive/upload': '../api/_handlers/drive/upload.js',
+  'GET /api/mca/drive/download': '../api/_handlers/drive/download.js',
+  'GET /api/mca/google/auth': '../api/_handlers/google/auth.js',
+  'GET /api/mca/google/callback': '../api/_handlers/google/callback.js',
+  'GET /api/mca/check': '../api/_handlers/check.js',
 }
 
 const handlerCache = new Map()

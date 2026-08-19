@@ -1,11 +1,7 @@
 {
   "framework": "nextjs",
   "functions": {
-    "api/mca/drive/upload.js": {
-      "maxDuration": 60,
-      "memory": 1024
-    },
-    "api/mca/drive/download.js": {
+    "api/mca/[...path].js": {
       "maxDuration": 60,
       "memory": 1024
     }
