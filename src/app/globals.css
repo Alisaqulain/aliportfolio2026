@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #070708;
+  --foreground: #f4f4f5;
+  --surface: #0e0e10;
+  --surface-elevated: #141416;
+  --border: rgba(255, 255, 255, 0.08);
+  --muted: #a1a1aa;
+  --accent: #e4e4e7;
+  --accent-muted: rgba(228, 228, 231, 0.12);
+  --grid: rgba(255, 255, 255, 0.03);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  ::selection {
+    @apply bg-white/15 text-white;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-white/30 ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer utilities {
+  .section-padding {
+    @apply px-5 py-20 sm:px-8 md:px-10 lg:px-12 xl:px-16;
+  }
+
+  .container-content {
+    @apply mx-auto w-full max-w-content;
+  }
+
+  .container-wide {
+    @apply mx-auto w-full max-w-wide;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-zinc-100 via-zinc-300 to-zinc-500 bg-clip-text text-transparent;
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  .marquee-track {
+    animation: marquee 40s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+@media print {
+  header,
+  footer,
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .resume-document {
+    border: none !important;
+    max-width: 100% !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .marquee-track {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

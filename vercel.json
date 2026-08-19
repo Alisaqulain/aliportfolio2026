@@ -1,11 +1,13 @@
 {
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
+  "framework": "nextjs",
+  "functions": {
+    "api/mca/drive/upload.js": {
+      "maxDuration": 60,
+      "memory": 1024
+    },
+    "api/mca/drive/download.js": {
+      "maxDuration": 60,
+      "memory": 1024
     }
-  ]
+  }
 }
-
-
-

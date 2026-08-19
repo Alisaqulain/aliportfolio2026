@@ -1,0 +1,219 @@
+.app {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  transition: background 0.3s ease;
+}
+
+.app::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
+  opacity: 0.04;
+  z-index: 0;
+  pointer-events: none;
+  animation: floatWatermark5D 30s ease-in-out infinite;
+  transform-style: preserve-3d;
+  filter: blur(1px);
+}
+
+.app::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
+  opacity: 0.02;
+  z-index: 0;
+  pointer-events: none;
+  animation: floatWatermark5DGlow 25s ease-in-out infinite;
+  transform-style: preserve-3d;
+  filter: blur(40px);
+}
+
+@keyframes floatWatermark5D {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) translateZ(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  16.66% {
+    transform: translate(40px, 30px) scale(1.08) translateZ(15px) rotateX(5deg) rotateY(5deg) rotateZ(2deg);
+  }
+  33.33% {
+    transform: translate(30px, 50px) scale(1.12) translateZ(30px) rotateX(10deg) rotateY(-5deg) rotateZ(-2deg);
+  }
+  50% {
+    transform: translate(-30px, 40px) scale(1.15) translateZ(40px) rotateX(-8deg) rotateY(8deg) rotateZ(3deg);
+  }
+  66.66% {
+    transform: translate(-40px, 20px) scale(1.1) translateZ(25px) rotateX(5deg) rotateY(-8deg) rotateZ(-3deg);
+  }
+  83.33% {
+    transform: translate(20px, -20px) scale(1.06) translateZ(15px) rotateX(-5deg) rotateY(5deg) rotateZ(1deg);
+  }
+}
+
+@keyframes floatWatermark5DGlow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) translateZ(-20px) rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: translate(50px, 40px) scale(1.2) translateZ(-10px) rotateX(10deg) rotateY(10deg);
+  }
+  50% {
+    transform: translate(40px, 60px) scale(1.3) translateZ(0px) rotateX(-10deg) rotateY(-10deg);
+  }
+  75% {
+    transform: translate(-40px, 50px) scale(1.25) translateZ(-15px) rotateX(8deg) rotateY(-8deg);
+  }
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+section {
+  position: relative;
+  min-height: 100vh;
+  padding: 80px 20px;
+  overflow: hidden;
+}
+
+/* 5D Logo Background for all sections */
+section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+  opacity: 0.03;
+  z-index: 0;
+  pointer-events: none;
+  animation: sectionLogo5D 25s ease-in-out infinite;
+  transform-style: preserve-3d;
+  filter: blur(2px);
+}
+
+section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60%;
+  opacity: 0.015;
+  z-index: 0;
+  pointer-events: none;
+  animation: sectionLogo5DGlow 20s ease-in-out infinite;
+  transform-style: preserve-3d;
+  filter: blur(50px);
+}
+
+@keyframes sectionLogo5D {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) translateZ(0) rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: translate(30px, 25px) scale(1.06) translateZ(20px) rotateX(8deg) rotateY(8deg);
+  }
+  50% {
+    transform: translate(25px, 45px) scale(1.1) translateZ(35px) rotateX(-8deg) rotateY(-8deg);
+  }
+  75% {
+    transform: translate(-25px, 35px) scale(1.08) translateZ(25px) rotateX(6deg) rotateY(-6deg);
+  }
+}
+
+@keyframes sectionLogo5DGlow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) translateZ(-15px) rotateX(0deg) rotateY(0deg);
+  }
+  33% {
+    transform: translate(40px, 35px) scale(1.15) translateZ(-5px) rotateX(12deg) rotateY(12deg);
+  }
+  66% {
+    transform: translate(35px, 55px) scale(1.25) translateZ(10px) rotateX(-12deg) rotateY(-12deg);
+  }
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 60px 15px;
+  }
+  
+  /* Disable expensive effects on mobile */
+  .app::before,
+  .app::after {
+    filter: none !important;
+    transform-style: flat !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  section::before,
+  section::after {
+    filter: none !important;
+    transform-style: flat !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  /* Simplify animations */
+  @keyframes floatWatermark5D {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(10px, 10px) scale(1.05);
+    }
+  }
+  
+  @keyframes floatWatermark5DGlow {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(15px, 15px) scale(1.1);
+    }
+  }
+  
+  @keyframes sectionLogo5D {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(10px, 10px) scale(1.05);
+    }
+  }
+  
+  @keyframes sectionLogo5DGlow {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(15px, 15px) scale(1.1);
+    }
+  }
+}

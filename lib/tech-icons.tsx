@@ -1,0 +1,108 @@
+import {
+  SiDocker,
+  SiExpress,
+  SiFirebase,
+  SiGit,
+  SiGithub,
+  SiJavascript,
+  SiLinux,
+  SiMongodb,
+  SiMysql,
+  SiNextdotjs,
+  SiNginx,
+  SiNodedotjs,
+  SiOpenai,
+  SiPm2,
+  SiReact,
+  SiRender,
+  SiSocketdotio,
+  SiSupabase,
+  SiTailwindcss,
+  SiThreedotjs,
+  SiTypescript,
+  SiVercel,
+  SiVite,
+  SiWebrtc,
+} from 'react-icons/si'
+import {
+  Bot,
+  Cloud,
+  Code2,
+  Cpu,
+  Database,
+  GitBranch,
+  Layers,
+  Smartphone,
+  Terminal,
+  Wrench,
+} from 'lucide-react'
+import type { IconType } from 'react-icons'
+
+type IconComponent = IconType | typeof Bot
+
+const TECH_ICON_MAP: Record<string, IconComponent> = {
+  'React.js': SiReact,
+  React: SiReact,
+  'Next.js': SiNextdotjs,
+  'JavaScript ES6+': SiJavascript,
+  JavaScript: SiJavascript,
+  TypeScript: SiTypescript,
+  'Tailwind CSS': SiTailwindcss,
+  Bootstrap: Layers,
+  'Material UI': Layers,
+  'Node.js': SiNodedotjs,
+  'Express.js': SiExpress,
+  'REST APIs': GitBranch,
+  'JWT Authentication': Terminal,
+  Supabase: SiSupabase,
+  'React Native': Smartphone,
+  Expo: Smartphone,
+  iOS: Smartphone,
+  Android: Smartphone,
+  MongoDB: SiMongodb,
+  MySQL: SiMysql,
+  'Socket.io': SiSocketdotio,
+  WebRTC: SiWebrtc,
+  'OpenAI API': SiOpenai,
+  'AI Chat': Bot,
+  'Recommendation Systems': Cpu,
+  Vercel: SiVercel,
+  Render: SiRender,
+  'Linux VPS': SiLinux,
+  Nginx: SiNginx,
+  PM2: SiPm2,
+  Docker: SiDocker,
+  'CI/CD': GitBranch,
+  Git: SiGit,
+  GitHub: SiGithub,
+  'VS Code': Code2,
+  Vite: SiVite,
+  Firebase: SiFirebase,
+  'Three.js': SiThreedotjs,
+  'AI Integration': Bot,
+  'Web + Mobile + AI': Cloud,
+}
+
+export function getTechIcon(name: string): IconComponent {
+  return TECH_ICON_MAP[name] ?? Wrench
+}
+
+export function getTechIconColor(name: string): string {
+  const colors: Record<string, string> = {
+    React: '#61DAFB',
+    'React.js': '#61DAFB',
+    'Next.js': '#ffffff',
+    TypeScript: '#3178C6',
+    'Node.js': '#339933',
+    MongoDB: '#47A248',
+    'Tailwind CSS': '#38BDF8',
+    'OpenAI API': '#10A37F',
+    Firebase: '#FFCA28',
+    Docker: '#2496ED',
+    Vercel: '#ffffff',
+    'Three.js': '#ffffff',
+    'Socket.io': '#010101',
+    WebRTC: '#333333',
+  }
+  return colors[name] ?? '#a1a1aa'
+}

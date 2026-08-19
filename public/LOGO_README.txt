@@ -1,15 +1,14 @@
-IMPORTANT: Add your logo.png file here
+Brand assets for Ali Saqulain portfolio
 
-1. Place your logo.png file in this public folder
-2. The logo will be automatically used as:
-   - Favicon (browser tab icon)
-   - Header logo
-   - Background watermark on all sections
+Current assets:
+- public/images/logo.svg      — Navbar + footer logo (AS monogram)
+- public/images/avatar.svg    — Hero + resume profile mark
+- src/app/icon.svg            — Browser favicon
+- src/app/apple-icon.svg      — Apple touch icon
+- src/app/opengraph-image.tsx — Auto-generated OG/social preview
 
-Recommended logo specifications:
-- Format: PNG with transparency
-- Size: 512x512px or larger (square format preferred)
-- File name: logo.png (exact name required)
+Optional upgrade:
+- Replace avatar.svg with your real photo at public/images/avatar.jpg
+- Replace logo.svg with your own logo at public/images/logo.svg
 
-
-
+After adding a photo, update components/hero/hero.tsx and components/resume/resume-view.tsx to use /images/avatar.jpg

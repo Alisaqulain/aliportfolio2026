@@ -1,0 +1,346 @@
+.mca-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.mca-login-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 100%);
+  pointer-events: none;
+}
+
+.mca-login-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(40px);
+  z-index: 0;
+}
+
+.mca-login-theme {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  z-index: 10;
+  backdrop-filter: blur(12px);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.mca-login-theme:hover {
+  border-color: rgba(0, 212, 255, 0.35);
+  background: var(--glass-bg);
+}
+
+.mca-login-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 440px;
+  padding: 2.75rem 2.25rem;
+  background: rgba(21, 21, 32, 0.72);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  text-align: center;
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+
+html[data-theme='light'] .mca-login-card {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.12);
+}
+
+.mca-login-card-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: 24px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.5),
+    rgba(123, 44, 191, 0.3),
+    rgba(255, 0, 110, 0.2),
+    rgba(0, 212, 255, 0.5)
+  );
+  background-size: 300% 300%;
+  animation: mca-border-flow 6s ease infinite;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+@keyframes mca-border-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.mca-login-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1rem;
+}
+
+.mca-login-icon-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  border: 1px dashed rgba(0, 212, 255, 0.35);
+}
+
+.mca-login-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.18), rgba(123, 44, 191, 0.18));
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  color: var(--primary-color);
+  font-size: 1.75rem;
+  box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15);
+  animation: mca-icon-pulse 3s ease-in-out infinite;
+}
+
+@keyframes mca-icon-pulse {
+  0%, 100% { box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15); }
+  50% { box-shadow: 0 8px 40px rgba(0, 212, 255, 0.28); }
+}
+
+.mca-login-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  margin-bottom: 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  background: rgba(0, 212, 255, 0.08);
+  color: var(--primary-color);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.mca-login-card h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.mca-login-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mca-login-card form {
+  text-align: left;
+}
+
+.mca-login-card label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.mca-login-input-wrapper {
+  position: relative;
+  margin-bottom: 1rem;
+  border-radius: 14px;
+  transition: transform 0.2s;
+}
+
+.mca-login-input-wrapper.is-focused {
+  transform: translateY(-1px);
+}
+
+.mca-login-input-wrapper.has-error input {
+  border-color: rgba(239, 68, 68, 0.6);
+  animation: mca-shake 0.45s ease;
+}
+
+@keyframes mca-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.mca-login-input-wrapper input {
+  width: 100%;
+  padding: 1rem 2.75rem 1rem 1rem;
+  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.mca-login-input-wrapper.is-focused input {
+  border-color: rgba(0, 212, 255, 0.55);
+  box-shadow:
+    0 0 0 3px rgba(0, 212, 255, 0.12),
+    0 8px 24px rgba(0, 212, 255, 0.08);
+}
+
+.mca-login-toggle {
+  position: absolute;
+  right: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.mca-login-toggle:hover {
+  color: var(--primary-color);
+}
+
+.mca-login-error {
+  color: #f87171;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  overflow: hidden;
+}
+
+.mca-login-submit {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: opacity 0.2s, box-shadow 0.25s;
+  box-shadow: 0 8px 28px rgba(0, 212, 255, 0.25);
+}
+
+.mca-login-submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.mca-login-submit:not(:disabled):hover {
+  box-shadow: 0 12px 36px rgba(0, 212, 255, 0.35);
+}
+
+.mca-login-submit-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  animation: mca-shine 3s ease-in-out infinite;
+}
+
+@keyframes mca-shine {
+  0%, 70%, 100% { transform: translateX(-100%); }
+  85% { transform: translateX(100%); }
+}
+
+.mca-login-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: mca-login-spin 0.7s linear infinite;
+}
+
+@keyframes mca-login-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 480px) {
+  .mca-login-card {
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+  }
+
+  .mca-login-card h1 {
+    font-size: 1.65rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mca-login-orb,
+  .mca-login-icon,
+  .mca-login-icon-ring,
+  .mca-login-card-glow,
+  .mca-login-submit-shine {
+    animation: none !important;
+  }
+}
