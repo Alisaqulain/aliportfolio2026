@@ -4,6 +4,12 @@ import { Hero, HomeExplore } from '@/components/hero/hero'
 import { Achievements } from '@/components/achievements/achievements'
 import { HomeFeatured } from '@/components/home/home-featured'
 import { TechMarquee } from '@/components/home/tech-marquee'
+import { HomeCapabilities } from '@/components/home/home-capabilities'
+import { HomeTechGrid } from '@/components/home/home-tech-grid'
+import { HomeProcess } from '@/components/home/home-process'
+import { HomeExperience } from '@/components/home/home-experience'
+import { HomeClients } from '@/components/home/home-clients'
+import { HomeCTA } from '@/components/home/home-cta'
 import { SEO, SITE } from '@/lib/constants'
 
 export const metadata: Metadata = {
@@ -23,9 +29,16 @@ export default function HomePage() {
     <PageShell>
       <Hero />
       <TechMarquee />
+      <HomeCapabilities />
       <HomeFeatured />
+      <HomeTechGrid />
       <Achievements />
+      <HomeProcess />
+      <HomeExperience />
+      <HomeClients />
+      <TechMarquee />
       <HomeExplore />
+      <HomeCTA />
     </PageShell>
   )
 }

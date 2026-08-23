@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { SEO, SITE } from '@/lib/constants'
 import { getPersonJsonLd } from '@/lib/seo'
@@ -63,6 +63,13 @@ export const metadata: Metadata = {
     // Add after Google Search Console setup:
     // google: 'your-verification-code',
   },
+} as const
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#070708',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

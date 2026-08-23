@@ -12,7 +12,7 @@ type ButtonProps = {
 
 export function Button({ href, children, variant = 'primary', className, external, onClick }: ButtonProps) {
   const styles = cn(
-    'inline-flex items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors',
+    'inline-flex min-h-[44px] items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors sm:min-h-0',
     variant === 'primary' && 'bg-foreground text-background hover:bg-zinc-200',
     variant === 'secondary' && 'border border-border bg-transparent text-foreground hover:bg-surface-elevated',
     variant === 'ghost' && 'text-muted hover:text-foreground',

@@ -17,7 +17,7 @@ export function ProjectPreview({ title, slug, visual, className, featured }: Pro
     <div
       className={cn(
         'group/preview relative overflow-hidden rounded-lg border border-border/80 bg-surface/60',
-        featured ? 'h-36 lg:h-40' : 'h-28 lg:h-32',
+        featured ? 'h-40 sm:h-36 lg:h-40' : 'h-32 sm:h-28 lg:h-32',
         className,
       )}
       aria-label={`${title} preview`}
