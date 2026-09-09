@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Download, Printer } from 'lucide-react'
 import { resume } from '@/data/resume'
+import { toTelHref } from '@/lib/links'
 import { Reveal } from '@/components/ui/reveal'
 import { TechIcon } from '@/components/ui/tech-icon'
 import { Section, SectionLabel } from '@/components/ui/section'
@@ -53,7 +54,7 @@ export function ResumeView() {
             <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs text-muted">
               <span>{resume.header.location}</span>
               <a href={`mailto:${resume.header.email}`} className="hover:text-foreground">{resume.header.email}</a>
-              <span>{resume.header.phone}</span>
+              <a href={toTelHref(resume.header.phone)} className="hover:text-foreground">{resume.header.phone}</a>
               <a href={resume.header.github} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">GitHub</a>
               <a href={resume.header.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">LinkedIn</a>
             </div>
@@ -116,7 +117,14 @@ export function ResumeView() {
                 <div key={client.name} className="border border-border/70 p-4">
                   <h3 className="text-sm font-medium">{client.name}</h3>
                   <p className="text-xs text-muted">{client.category}</p>
-                  <p className="mt-1 font-mono text-[11px] text-muted">{client.website.replace('https://', '')}</p>
+                  <a
+                    href={client.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 inline-block font-mono text-[11px] text-muted transition-colors hover:text-foreground"
+                  >
+                    {client.website.replace('https://', '')}
+                  </a>
                 </div>
               ))}
             </div>

@@ -15,12 +15,12 @@ function Hero3DSceneInner() {
 
     const init = async () => {
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      if (reducedMotion || disposed) return
+      const isMobile = window.innerWidth < 768
+      if (reducedMotion || isMobile || disposed) return
 
       const THREE = await import('three')
       if (disposed || !containerRef.current) return
 
-      const isMobile = window.innerWidth < 768
       const isTablet = window.innerWidth < 1024
 
       const width = container.clientWidth
@@ -38,7 +38,7 @@ function Hero3DSceneInner() {
         alpha: true,
         powerPreference: 'high-performance',
       })
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.25 : 1.75))
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isTablet ? 1 : 1.25))
       renderer.setSize(width, height)
       renderer.setClearColor(0x070708, 1)
       container.appendChild(renderer.domElement)
@@ -46,7 +46,7 @@ function Hero3DSceneInner() {
       const world = new THREE.Group()
       scene.add(world)
 
-      const starCount = isMobile ? 900 : isTablet ? 1800 : 3200
+      const starCount = isTablet ? 1200 : 2000
       const starPositions = new Float32Array(starCount * 3)
       for (let i = 0; i < starCount; i += 1) {
         starPositions[i * 3] = (Math.random() - 0.5) * 40
@@ -87,7 +87,7 @@ function Hero3DSceneInner() {
         { geo: new THREE.TetrahedronGeometry(0.32, 0), color: 0x6ee7b7, radius: 3.5, speed: -0.22, y: -0.9 },
       ]
 
-      if (isMobile) orbitConfigs.splice(2)
+      if (isTablet) orbitConfigs.splice(2)
 
       const orbiters: InstanceType<typeof THREE.Mesh>[] = []
       orbitConfigs.forEach((cfg, i) => {
@@ -100,7 +100,7 @@ function Hero3DSceneInner() {
         world.add(mesh)
       })
 
-      const nodeCount = isMobile ? 24 : 48
+      const nodeCount = isTablet ? 24 : 36
       const networkNodes: InstanceType<typeof THREE.Vector3>[] = []
       for (let i = 0; i < nodeCount; i += 1) {
         networkNodes.push(
@@ -146,9 +146,25 @@ function Hero3DSceneInner() {
       world.add(grid)
 
       const clock = new THREE.Clock()
+      let visible = true
+      let tabVisible = !document.hidden
+
+      const observer = new IntersectionObserver(
+        ([entry]) => { visible = entry.isIntersecting },
+        { threshold: 0.05 },
+      )
+      observer.observe(container)
+
+      const onVisibility = () => { tabVisible = !document.hidden }
+      document.addEventListener('visibilitychange', onVisibility)
 
       const animate = () => {
         if (disposed) return
+
+        if (!visible || !tabVisible) {
+          frameId = window.requestAnimationFrame(animate)
+          return
+        }
 
         const elapsed = clock.getElapsedTime()
 
@@ -199,6 +215,8 @@ function Hero3DSceneInner() {
       window.addEventListener('resize', onResize)
 
       cleanup = () => {
+        observer.disconnect()
+        document.removeEventListener('visibilitychange', onVisibility)
         window.cancelAnimationFrame(frameId)
         window.removeEventListener('resize', onResize)
         if (container.contains(renderer.domElement)) {

@@ -2,6 +2,7 @@ import { ExternalLink, Github } from 'lucide-react'
 import type { Project } from '@/data/projects'
 import { getProjectVisual } from '@/lib/visuals'
 import { cn } from '@/lib/utils'
+import { isValidHref } from '@/lib/links'
 import { ProjectPreview } from '@/components/ui/project-preview'
 import { TechIcon } from '@/components/ui/tech-icon'
 
@@ -48,7 +49,7 @@ export function ProjectBlock({ project }: { project: Project }) {
       </div>
 
       <div className="flex items-start gap-3 lg:flex-col">
-        {project.github && (
+        {isValidHref(project.github) && (
           <a
             href={project.github}
             target="_blank"
@@ -58,7 +59,7 @@ export function ProjectBlock({ project }: { project: Project }) {
             <Github size={14} /> GitHub
           </a>
         )}
-        {project.liveUrl && (
+        {isValidHref(project.liveUrl) && (
           <a
             href={project.liveUrl}
             target="_blank"

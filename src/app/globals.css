@@ -106,6 +106,31 @@
     0% { transform: translateX(-50%); }
     100% { transform: translateX(0); }
   }
+
+  .float-tech {
+    animation: float-tech 5s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @keyframes float-tech {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .glass-card {
+    background: rgba(14, 14, 16, 0.85);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+      0 16px 32px -12px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (min-width: 1024px) {
+    .glass-card {
+      background: rgba(14, 14, 16, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  }
 }
 
 @media print {
@@ -135,6 +160,10 @@
   }
 
   .marquee-track-reverse {
+    animation: none;
+  }
+
+  .float-tech {
     animation: none;
   }
 

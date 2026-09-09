@@ -16,8 +16,8 @@ export const SITE = {
 } as const
 
 export const SOCIAL = {
-  github: readPublicEnv('NEXT_PUBLIC_GITHUB_URL', 'https://github.com/PLACEHOLDER_GITHUB'),
-  linkedin: readPublicEnv('NEXT_PUBLIC_LINKEDIN_URL', 'https://linkedin.com/in/PLACEHOLDER_LINKEDIN'),
+  github: readPublicEnv('NEXT_PUBLIC_GITHUB_URL', 'https://github.com/Alisaqulain'),
+  linkedin: readPublicEnv('NEXT_PUBLIC_LINKEDIN_URL', 'https://linkedin.com/in/ali-saqulain-7404a8287'),
 } as const
 
 export const SEO = {
