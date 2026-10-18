@@ -1,12 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
 import { skillCategories } from '@/data/skills'
 import { cn } from '@/lib/utils'
+import { Section } from '@/components/ui/section'
 import { Reveal } from '@/components/ui/reveal'
 import { TechIcon } from '@/components/ui/tech-icon'
-import { Section, SectionLabel, SectionTitle } from '@/components/ui/section'
+import { TiltCard } from '@/components/3d/tilt-card'
+import { GlassCard } from '@/components/3d/glass-card'
 
 const CATEGORY_ICONS: Record<string, string> = {
   frontend: 'React.js',
@@ -24,60 +25,48 @@ export function Skills() {
   const current = skillCategories.find((c) => c.id === active) ?? skillCategories[0]
 
   return (
-    <Section id="skills" className="pt-28">
-      <SectionLabel>Technical Stack</SectionLabel>
-      <SectionTitle>Technologies I work with</SectionTitle>
-
-      <Reveal className="mt-10">
-        <div className="flex flex-wrap gap-2">
-          {skillCategories.map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              onClick={() => setActive(cat.id)}
-              className={cn(
-                'inline-flex items-center gap-2 rounded-md border px-3 py-1.5 font-mono text-xs transition-all duration-200',
-                active === cat.id
-                  ? 'border-foreground bg-foreground text-background'
-                  : 'border-border text-muted hover:border-foreground/30 hover:text-foreground',
-              )}
-            >
-              <TechIcon
-                name={CATEGORY_ICONS[cat.id] ?? cat.label}
-                size={14}
-                colored={active === cat.id}
-                className={active === cat.id ? 'text-background' : undefined}
-              />
-              {cat.label}
-            </button>
-          ))}
+    <Section id="skills" className="pt-0 sm:pt-0 lg:pt-0">
+      <Reveal>
+        <div role="tablist" aria-label="Skill categories" className="mask-fade-x -mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden">
+          {skillCategories.map((cat) => {
+            const selected = active === cat.id
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                role="tab"
+                aria-selected={selected}
+                onClick={() => setActive(cat.id)}
+                className={cn(
+                  'inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-sm transition-all duration-300',
+                  selected
+                    ? 'border-violet-400/50 bg-violet-500/15 text-foreground shadow-[0_0_24px_-6px_rgba(139,92,246,0.7)]'
+                    : 'border-white/[0.08] text-muted hover:border-white/20 hover:text-foreground',
+                )}
+              >
+                <TechIcon name={CATEGORY_ICONS[cat.id] ?? cat.label} size={15} />
+                {cat.label}
+                <span className="font-mono text-[10px] text-muted">{cat.items.length}</span>
+              </button>
+            )
+          })}
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.id}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {current.items.map((item, i) => (
-              <motion.div
-                key={item}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.03, duration: 0.25 }}
-                className="flex items-center gap-3 border border-border/80 px-4 py-3 transition-colors hover:border-foreground/20 hover:bg-surface/40"
-              >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-border/70 bg-background/50">
-                  <TechIcon name={item} size={18} />
-                </div>
-                <span className="font-mono text-sm text-foreground">{item}</span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        {/* key re-mounts the grid so the CSS entry animation replays */}
+        <div key={current.id} role="tabpanel" className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+          {current.items.map((item, i) => (
+            <div key={item} className="animate-fade-in" style={{ animationDelay: `${i * 40}ms` }}>
+              <TiltCard maxRotate={10}>
+                <GlassCard className="flex flex-col items-center gap-4 px-4 py-8 text-center">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-[#0d0d18] shadow-[0_14px_30px_-12px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(255,255,255,0.08)] transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-110">
+                    <TechIcon name={item} size={30} />
+                  </div>
+                  <span className="text-sm font-medium text-foreground/90">{item}</span>
+                </GlassCard>
+              </TiltCard>
+            </div>
+          ))}
+        </div>
       </Reveal>
     </Section>
   )

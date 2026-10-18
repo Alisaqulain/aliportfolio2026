@@ -1,71 +1,76 @@
-import { ExternalLink } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import { clientProjects } from '@/data/clients'
-import { CLIENT_VISUALS } from '@/lib/visuals'
+import { CLIENT_VISUALS, getDomainFromUrl } from '@/lib/visuals'
+import { cn } from '@/lib/utils'
+import { Section, SectionHeader } from '@/components/ui/section'
 import { Reveal } from '@/components/ui/reveal'
 import { SiteFavicon } from '@/components/ui/site-favicon'
 import { TechIcon } from '@/components/ui/tech-icon'
-import { Section, SectionLabel, SectionTitle } from '@/components/ui/section'
+import { TiltCard } from '@/components/3d/tilt-card'
+import { GlassCard } from '@/components/3d/glass-card'
 
-export function ClientProjects() {
+export function ClientGrid({ limit, className }: { limit?: number; className?: string }) {
+  const list = limit ? clientProjects.slice(0, limit) : clientProjects
+
   return (
-    <Section id="client-work" className="bg-surface/40">
-      <SectionLabel>Client Work</SectionLabel>
-      <SectionTitle>Selected Client Work</SectionTitle>
-      <p className="mt-4 max-w-2xl text-muted">Production systems built for real businesses.</p>
-
-      <div className="mt-10 grid gap-4 lg:grid-cols-2">
-        {clientProjects.map((project, i) => {
-          const visual = CLIENT_VISUALS[project.name] ?? {
-            initials: project.name.slice(0, 2).toUpperCase(),
-            accent: '#a1a1aa',
-            gradient: 'from-zinc-500/20 to-transparent',
-          }
-
-          return (
-            <Reveal key={project.name} delay={i * 0.04}>
-              <article className="group overflow-hidden border border-border bg-background/40 transition-colors hover:bg-surface-elevated/20">
-                <div className="relative border-b border-border/60 p-5">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${visual.gradient} opacity-80`} />
-                  <div className="relative flex items-center gap-4">
-                    <SiteFavicon website={project.website} name={project.name} size={48} />
+    <div className={cn('grid gap-4 md:grid-cols-2', className)}>
+      {list.map((project, i) => {
+        const accent = CLIENT_VISUALS[project.name]?.accent ?? '#a78bfa'
+        return (
+          <Reveal key={project.name} delay={(i % 2) * 0.08} className="h-full">
+            <TiltCard maxRotate={4} className="h-full">
+              <a href={project.website} target="_blank" rel="noopener noreferrer" className="block h-full">
+                <GlassCard className="flex h-full flex-col p-6 sm:p-7">
+                  <span
+                    className="pointer-events-none absolute -right-16 -top-16 -z-10 h-48 w-48 rounded-full opacity-60 transition-opacity duration-500 group-hover:opacity-100"
+                    style={{ background: `radial-gradient(circle, ${accent}40 0%, transparent 70%)` }}
+                    aria-hidden
+                  />
+                  <div className="flex items-center gap-4">
+                    <SiteFavicon website={project.website} name={project.name} size={52} className="rounded-2xl border-white/10" />
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-lg font-medium">{project.name}</h3>
-                      <p className="mt-1 font-mono text-xs uppercase tracking-wider text-muted">{project.category}</p>
-                      <p className="mt-1 truncate font-mono text-[11px] text-muted/80">
-                        {project.website.replace('https://', '')}
+                      <h3 className="text-xl font-semibold tracking-tight">{project.name}</h3>
+                      <p className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.14em]" style={{ color: accent }}>
+                        {project.category}
                       </p>
                     </div>
-                    <a
-                      href={project.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-md border border-border p-2 text-muted transition-colors hover:text-foreground"
-                      aria-label={`Visit ${project.name}`}
-                    >
-                      <ExternalLink size={16} />
-                    </a>
+                    <span className="icon-btn shrink-0 group-hover:border-violet-400/40 group-hover:text-foreground">
+                      <ArrowUpRight size={17} />
+                    </span>
                   </div>
-                </div>
-
-                <div className="p-5">
-                  <p className="text-sm leading-relaxed text-muted">{project.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
+                  <p className="mt-5 text-sm leading-relaxed text-muted">{project.description}</p>
+                  <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-5">
                     {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="inline-flex items-center gap-1.5 font-mono text-[11px] text-muted"
-                      >
-                        <TechIcon name={tech} size={12} />
+                      <span key={tech} className="chip">
+                        <TechIcon name={tech} size={11} />
                         {tech}
                       </span>
                     ))}
+                    <span className="ml-auto font-mono text-[11px] text-muted/70">{getDomainFromUrl(project.website)}</span>
                   </div>
-                </div>
-              </article>
-            </Reveal>
-          )
-        })}
-      </div>
+                </GlassCard>
+              </a>
+            </TiltCard>
+          </Reveal>
+        )
+      })}
+    </div>
+  )
+}
+
+export function ClientProjects() {
+  return (
+    <Section id="client-work">
+      <SectionHeader
+        label="Client work"
+        title={
+          <>
+            Built for <span className="text-gradient">real businesses.</span>
+          </>
+        }
+        description="Production systems delivered for clients in India and Dubai."
+      />
+      <ClientGrid className="mt-14" />
     </Section>
   )
 }

@@ -13,20 +13,20 @@ export function ResumeView() {
   const printResume = () => window.print()
 
   return (
-    <Section container="wide" className="pt-28">
+    <Section container="wide" className="pt-32 sm:pt-40 lg:pt-40">
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4 print:hidden">
         <SectionLabel>Resume</SectionLabel>
         <div className="flex gap-3">
           <button
             type="button"
             onClick={printResume}
-            className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2 text-sm transition-colors hover:bg-surface-elevated"
+            className="btn btn-secondary"
           >
             <Printer size={14} /> Print / Save PDF
           </button>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 rounded-md bg-foreground px-4 py-2 text-sm text-background transition-colors hover:bg-zinc-200"
+            className="btn btn-primary"
           >
             <Download size={14} /> Contact Me
           </Link>
@@ -34,7 +34,7 @@ export function ResumeView() {
       </div>
 
       <Reveal>
-        <article className="resume-document mx-auto max-w-4xl border border-border bg-background p-8 sm:p-12 print:border-0 print:p-0">
+        <article className="resume-document card mx-auto max-w-4xl p-7 sm:p-12 print:border-0 print:p-0">
           <header className="border-b border-border pb-8">
             <div className="flex flex-wrap items-start gap-5">
               <Image
@@ -45,7 +45,7 @@ export function ResumeView() {
                 className="rounded-xl border border-border/80"
               />
               <div>
-                <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{resume.header.name}</h1>
+                <h1 className="text-gradient-soft text-3xl font-semibold tracking-tight sm:text-5xl print:text-black">{resume.header.name}</h1>
                 <p className="mt-2 text-lg text-muted">{resume.header.title}</p>
                 <p className="text-sm text-muted">{resume.header.subtitle}</p>
               </div>
@@ -61,12 +61,12 @@ export function ResumeView() {
           </header>
 
           <section className="mt-8">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Summary</h2>
+            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-violet-300 print:text-black">Summary</h2>
             <p className="mt-3 text-sm leading-relaxed text-foreground/90">{resume.summary}</p>
           </section>
 
           <section className="mt-8">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Highlights</h2>
+            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-violet-300 print:text-black">Highlights</h2>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">
               {resume.highlights.map((item) => (
                 <li key={item} className="text-sm text-foreground/90 before:mr-2 before:text-muted before:content-['—']">
@@ -77,7 +77,7 @@ export function ResumeView() {
           </section>
 
           <section className="mt-10">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Experience</h2>
+            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-violet-300 print:text-black">Experience</h2>
             <div className="mt-5 space-y-8">
               {resume.experience.map((job) => (
                 <div key={job.company}>
@@ -97,7 +97,7 @@ export function ResumeView() {
           </section>
 
           <section className="mt-10">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Selected Projects</h2>
+            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-violet-300 print:text-black">Selected Projects</h2>
             <div className="mt-5 space-y-5">
               {resume.projects.slice(0, 4).map((project) => (
                 <div key={project.title}>
@@ -111,10 +111,10 @@ export function ResumeView() {
           </section>
 
           <section className="mt-10">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Client Work</h2>
+            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-violet-300 print:text-black">Client Work</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               {resume.clientProjects.map((client) => (
-                <div key={client.name} className="border border-border/70 p-4">
+                <div key={client.name} className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
                   <h3 className="text-sm font-medium">{client.name}</h3>
                   <p className="text-xs text-muted">{client.category}</p>
                   <a
@@ -131,7 +131,7 @@ export function ResumeView() {
           </section>
 
           <section className="mt-10">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Technical Skills</h2>
+            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-violet-300 print:text-black">Technical Skills</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               {resume.skills.map((group) => (
                 <div key={group.id}>
@@ -150,7 +150,7 @@ export function ResumeView() {
           </section>
 
           <section className="mt-10 border-t border-border pt-8">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Education</h2>
+            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-violet-300 print:text-black">Education</h2>
             <p className="mt-3 text-sm font-medium">{resume.education.degree}</p>
             <p className="mt-1 text-sm text-muted">
               {resume.education.location} · {resume.education.period} · {resume.education.status}

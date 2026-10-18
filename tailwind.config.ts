@@ -15,6 +15,8 @@ const config: Config = {
         border: 'var(--border)',
         muted: 'var(--muted)',
         accent: 'var(--accent)',
+        'accent-2': 'var(--accent-2)',
+        'accent-3': 'var(--accent-3)',
         'accent-muted': 'var(--accent-muted)',
       },
       fontFamily: {
@@ -22,8 +24,8 @@ const config: Config = {
         mono: ['var(--font-geist-mono)', 'ui-monospace', 'monospace'],
       },
       maxWidth: {
-        content: '1200px',
-        wide: '1400px',
+        content: '1120px',
+        wide: '1320px',
       },
       spacing: {
         section: '7rem',

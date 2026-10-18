@@ -1,79 +1,83 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import { Sparkles } from 'lucide-react'
-import { capabilities } from '@/data/skills'
-import { CAPABILITY_ICONS } from '@/lib/visuals'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
-import { AnimatedSectionHeader } from '@/components/ui/animated-section-header'
+import { capabilities } from '@/data/skills'
+import { CAPABILITY_ICONS } from '@/lib/visuals'
+import { cn } from '@/lib/utils'
+import { Section, SectionHeader } from '@/components/ui/section'
+import { Reveal } from '@/components/ui/reveal'
 import { TiltCard } from '@/components/3d/tilt-card'
 import { GlassCard } from '@/components/3d/glass-card'
 
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
+/** Isometric stack of layers that spreads apart on hover */
+function LayerStack() {
+  const layers = [
+    { z: 0, label: 'Database', tint: 'rgba(34,211,238,0.18)', border: 'rgba(34,211,238,0.5)' },
+    { z: 28, label: 'API', tint: 'rgba(99,102,241,0.2)', border: 'rgba(129,140,248,0.55)' },
+    { z: 56, label: 'Interface', tint: 'rgba(139,92,246,0.25)', border: 'rgba(167,139,250,0.65)' },
+  ]
+  return (
+    <div className="perspective relative mx-auto h-48 w-48 sm:h-56 sm:w-56" aria-hidden>
+      <div className="iso-stack absolute inset-6">
+        {layers.map((l) => (
+          <div
+            key={l.label}
+            className="iso-layer flex items-end p-3"
+            style={{ '--z': `${l.z}px`, background: l.tint, border: `1px solid ${l.border}`, boxShadow: `0 0 40px -10px ${l.border}` } as React.CSSProperties}
+          >
+            <span className="font-mono text-[10px] uppercase tracking-wider text-white/70">{l.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
 
-const card = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-}
+// 3-col bento: hero tile 2x2 + five singles fills a clean 3x3; on 2-col the last tile spans to close the gap
+const SPANS = ['sm:col-span-2 lg:row-span-2', '', '', '', '', 'sm:col-span-2 lg:col-span-1']
 
 export function HomeCapabilities() {
   return (
-    <section className="scene-3d relative overflow-hidden border-t border-border/60 bg-surface/20 section-padding">
-      <div className="pointer-events-none absolute -left-32 top-1/2 h-64 w-64 rounded-full bg-emerald-500/[0.04] blur-3xl" />
-      <div className="pointer-events-none absolute -right-32 top-1/4 h-64 w-64 rounded-full bg-blue-500/[0.04] blur-3xl" />
-
-      <div className="container-wide relative">
-        <AnimatedSectionHeader
-          icon={Sparkles}
-          label="Capabilities"
-          title="What I build for production."
-          description="End-to-end engineering across web, mobile, AI, and infrastructure."
-        />
-
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-60px' }}
-          className="mt-10 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3"
-        >
-          {capabilities.map((item) => {
-            const Icon = CAPABILITY_ICONS[item.title] ?? CAPABILITY_ICONS['Full-Stack Products']
-            return (
-              <motion.div key={item.title} variants={card} className="h-full">
-                <TiltCard maxRotate={4}>
-                  <GlassCard glow className="group relative h-full p-5 sm:p-6" data-cursor="card">
-                    <motion.div
-                      className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-border/70 bg-background/60 text-foreground"
-                    >
-                      <Icon size={20} strokeWidth={1.75} />
-                    </motion.div>
-                    <h3 className="text-base font-medium text-foreground">{item.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted">{item.description}</p>
-                    <div className="mt-4 h-px w-0 bg-gradient-to-r from-emerald-400/50 to-transparent transition-all duration-500 group-hover:w-full" />
-                  </GlassCard>
-                </TiltCard>
-              </motion.div>
-            )
-          })}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="mt-8 sm:mt-10"
-        >
-          <Link href="/skills" data-cursor="link" className="inline-flex items-center gap-1 text-sm text-muted transition-colors hover:text-foreground">
-            View full tech stack <ArrowUpRight size={14} />
+    <Section id="capabilities">
+      <SectionHeader
+        label="What I do"
+        title={
+          <>
+            End-to-end engineering, <span className="text-gradient">shipped to production.</span>
+          </>
+        }
+        description="Web, mobile, AI and infrastructure — one engineer owning the whole lifecycle."
+        action={
+          <Link href="/skills" className="btn btn-secondary">
+            Full tech stack <ArrowUpRight size={15} />
           </Link>
-        </motion.div>
+        }
+      />
+
+      <div className="mt-14 grid auto-rows-[minmax(200px,auto)] gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {capabilities.map((item, i) => {
+          const Icon = CAPABILITY_ICONS[item.title] ?? CAPABILITY_ICONS['Full-Stack Products']
+          const hero = i === 0
+          return (
+            <Reveal key={item.title} delay={i * 0.06} className={cn('h-full', SPANS[i])}>
+              <TiltCard maxRotate={hero ? 3 : 6} className="h-full">
+                <GlassCard glow={hero} className={cn('flex h-full flex-col p-6 sm:p-7', hero && 'justify-between')}>
+                  {hero && <LayerStack />}
+                  <div className={cn(!hero && 'flex h-full flex-col')}>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-violet-300/20 bg-gradient-to-br from-violet-500/25 to-cyan-400/10 text-violet-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_10px_30px_-10px_rgba(139,92,246,0.6)]">
+                      <Icon size={20} strokeWidth={1.75} />
+                    </div>
+                    <h3 className={cn('mt-5 font-semibold tracking-tight', hero ? 'text-2xl sm:text-3xl' : 'text-lg')}>{item.title}</h3>
+                    <p className={cn('mt-2 leading-relaxed text-muted', hero ? 'max-w-md text-base' : 'text-sm')}>{item.description}</p>
+                    {!hero && (
+                      <span className="mt-auto pt-5 font-mono text-[11px] text-muted/70">0{i + 1}</span>
+                    )}
+                  </div>
+                </GlassCard>
+              </TiltCard>
+            </Reveal>
+          )
+        })}
       </div>
-    </section>
+    </Section>
   )
 }

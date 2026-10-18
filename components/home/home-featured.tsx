@@ -1,16 +1,14 @@
-'use client'
-
+import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
 import { projects } from '@/data/projects'
 import { getProjectVisual } from '@/lib/visuals'
-import Link from 'next/link'
-import { ArrowUpRight, ExternalLink, FolderKanban } from 'lucide-react'
+import { getProjectHref, isExternalHref } from '@/lib/links'
+import { Section, SectionHeader } from '@/components/ui/section'
 import { Reveal } from '@/components/ui/reveal'
-import { AnimatedSectionHeader } from '@/components/ui/animated-section-header'
 import { ProjectPreview } from '@/components/ui/project-preview'
 import { TechIcon } from '@/components/ui/tech-icon'
 import { TiltCard } from '@/components/3d/tilt-card'
 import { GlassCard } from '@/components/3d/glass-card'
-import { getProjectHref, isExternalHref } from '@/lib/links'
 
 export function HomeFeatured() {
   const featured = projects.filter((p) => p.featured)
@@ -18,78 +16,66 @@ export function HomeFeatured() {
   const display = [...featured, ...rest].slice(0, 4)
 
   return (
-    <section className="scene-3d relative border-t border-border/60 bg-background">
-      <div className="section-padding container-wide">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <AnimatedSectionHeader
-            icon={FolderKanban}
-            label="Featured Work"
-            title="Production systems shipped."
-            description="Selected builds spanning AI, real-time, fintech, and full-stack platforms."
-          />
-          <Link
-            href="/projects"
-            className="inline-flex min-h-[44px] shrink-0 items-center gap-1 self-start text-sm text-muted transition-colors hover:text-foreground sm:min-h-0 sm:self-end"
-          >
-            All projects <ArrowUpRight size={14} />
+    <Section id="work">
+      <SectionHeader
+        label="Selected work"
+        title={
+          <>
+            Products I&apos;ve <span className="text-gradient">designed &amp; shipped.</span>
+          </>
+        }
+        description="AI, real-time, fintech and full-stack platforms — built end to end."
+        action={
+          <Link href="/projects" className="btn btn-secondary">
+            All projects <ArrowUpRight size={15} />
           </Link>
-        </div>
+        }
+      />
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 sm:gap-5">
-          {display.map((project, i) => {
-            const visual = getProjectVisual(project.slug, project.title)
-            const Icon = visual.icon
-            const href = getProjectHref(project)
-            const external = isExternalHref(href)
+      <div className="mt-14 grid gap-5 md:grid-cols-2">
+        {display.map((project, i) => {
+          const visual = getProjectVisual(project.slug, project.title)
+          const href = getProjectHref(project)
+          const external = isExternalHref(href)
+          const linkProps = external ? { target: '_blank', rel: 'noopener noreferrer' } : {}
 
-            const card = (
-              <GlassCard className="group/card overflow-hidden transition-all hover:border-foreground/15">
-                <ProjectPreview title={project.title} slug={project.slug} visual={visual} featured className="rounded-none border-0" />
-                <div className="border-t border-border/60 p-4 sm:p-6">
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="flex h-7 w-7 items-center justify-center rounded-md border border-border/60 bg-background/50"
-                      style={{ color: visual.accent }}
-                    >
-                      <Icon size={14} strokeWidth={1.75} />
+          return (
+            <Reveal key={project.slug} delay={(i % 2) * 0.1}>
+              <TiltCard maxRotate={4} className="h-full">
+                <Link href={href} {...linkProps} className="block h-full">
+                  <GlassCard className="flex h-full flex-col">
+                    <ProjectPreview title={project.title} slug={project.slug} visual={visual} featured flip={i % 2 === 1} />
+                    <div className="flex flex-1 flex-col border-t border-white/[0.06] p-6 sm:p-7">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="font-mono text-[11px] uppercase tracking-[0.16em]" style={{ color: visual.accent }}>
+                          {project.category}
+                        </p>
+                        <span className="font-mono text-xs text-muted">{project.number}</span>
+                      </div>
+                      <h3 className="mt-3 flex items-center gap-2 text-2xl font-semibold tracking-tight">
+                        {project.title}
+                        <ArrowUpRight
+                          size={20}
+                          className="text-muted transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground"
+                        />
+                      </h3>
+                      <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted">{project.description}</p>
+                      <div className="mt-auto flex flex-wrap gap-1.5 pt-5">
+                        {project.technologies.slice(0, 5).map((tech) => (
+                          <span key={tech} className="chip">
+                            <TechIcon name={tech} size={11} />
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    <p className="font-mono text-[11px] uppercase tracking-wider text-muted sm:text-xs">{project.category}</p>
-                  </div>
-                  <h3 className="mt-2 flex items-center gap-2 text-lg font-medium sm:text-xl">
-                    {project.title}
-                    {external && <ExternalLink size={14} className="text-muted opacity-0 transition-opacity group-hover/card:opacity-100" aria-hidden />}
-                  </h3>
-                  <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted sm:mt-2">{project.description}</p>
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {project.technologies.slice(0, 4).map((tech) => (
-                      <span key={tech} className="inline-flex items-center gap-1 rounded-full border border-border/50 bg-background/30 px-2 py-0.5 font-mono text-[9px] text-muted">
-                        <TechIcon name={tech} size={10} />
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </GlassCard>
-            )
-
-            return (
-              <Reveal key={project.slug} delay={i * 0.08}>
-                <TiltCard maxRotate={4}>
-                  {external ? (
-                    <a href={href} target="_blank" rel="noopener noreferrer" className="block">
-                      {card}
-                    </a>
-                  ) : (
-                    <Link href={href} className="block">
-                      {card}
-                    </Link>
-                  )}
-                </TiltCard>
-              </Reveal>
-            )
-          })}
-        </div>
+                  </GlassCard>
+                </Link>
+              </TiltCard>
+            </Reveal>
+          )
+        })}
       </div>
-    </section>
+    </Section>
   )
 }

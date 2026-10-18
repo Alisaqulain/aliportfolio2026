@@ -1,28 +1,25 @@
-'use client'
-
 import { cn } from '@/lib/utils'
 
 type GlassCardProps = {
   children: React.ReactNode
   className?: string
-  depth?: 'back' | 'normal' | 'front'
   glow?: boolean
+  hover?: boolean
+  as?: 'div' | 'article'
 }
 
-export function GlassCard({ children, className, depth = 'normal', glow }: GlassCardProps) {
+/** Elevated surface. No backdrop-filter — layered gradients look the same and cost nothing. */
+export function GlassCard({ children, className, glow, hover = true, as: Tag = 'div' }: GlassCardProps) {
   return (
-    <div
-      className={cn(
-        'glass-card relative overflow-hidden rounded-xl border border-white/[0.08]',
-        depth === 'back' && 'glass-depth-back',
-        depth === 'normal' && 'glass-depth-normal',
-        depth === 'front' && 'glass-depth-front',
-        glow && 'glass-glow',
-        className,
+    <Tag className={cn('card group overflow-hidden', hover && 'card-hover', className)}>
+      <span className="spotlight" aria-hidden />
+      {glow && (
+        <span
+          className="pointer-events-none absolute -right-20 -top-20 -z-10 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.22)_0%,transparent_70%)]"
+          aria-hidden
+        />
       )}
-    >
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.06] via-transparent to-transparent" />
       {children}
-    </div>
+    </Tag>
   )
 }

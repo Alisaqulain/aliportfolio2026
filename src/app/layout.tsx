@@ -69,15 +69,17 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: '#070708',
+  themeColor: '#05050a',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const jsonLd = getPersonJsonLd()
 
   return (
-    <html lang="en-IN" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en-IN" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <body className="relative min-h-screen font-sans">
+        {/* Enables scroll-reveal styles only when JS runs, so content is never hidden without it */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
