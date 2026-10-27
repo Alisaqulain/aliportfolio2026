@@ -24,7 +24,7 @@ export function HomeFeatured() {
             Products I&apos;ve <span className="text-gradient">designed &amp; shipped.</span>
           </>
         }
-        description="AI, real-time, fintech and full-stack platforms — built end to end."
+        description="AI automation, developer tooling, campus platforms and real-time apps — built end to end."
         action={
           <Link href="/projects" className="btn btn-secondary">
             All projects <ArrowUpRight size={15} />

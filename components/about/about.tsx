@@ -1,5 +1,8 @@
+import Link from 'next/link'
 import { Brain, Cloud, Code2, Rocket, Shield, Users } from 'lucide-react'
-import { achievements } from '@/data/skills'
+import { achievements, keyAchievements } from '@/data/skills'
+import { DEVSPHERE } from '@/lib/constants'
+import { CountUp } from '@/components/ui/count-up'
 import { Section, SectionHeader } from '@/components/ui/section'
 import { Reveal } from '@/components/ui/reveal'
 import { TiltCard } from '@/components/3d/tilt-card'
@@ -32,13 +35,27 @@ export function About() {
             <GlassCard hover={false} glow className="h-full p-7 sm:p-10">
               <div className="space-y-5 text-lg leading-relaxed text-foreground/80 sm:text-xl">
                 <p>
-                  I work across the entire product lifecycle — from understanding business requirements and designing
-                  system architecture to development, deployment, and production delivery.
+                  I&apos;m a Forward Deployed Engineer and Full-Stack Systems Developer who works across the entire product
+                  lifecycle — from understanding business requirements and designing system architecture to development,
+                  deployment, and production delivery.
                 </p>
                 <p className="text-muted">
-                  I specialize in building products that connect engineering decisions with real business requirements.
+                  I founded{' '}
+                  <Link href="/devsphere" className="text-foreground underline decoration-violet-400/50 underline-offset-4 hover:decoration-violet-300">
+                    {DEVSPHERE.name}
+                  </Link>
+                  , where I&apos;ve shipped 13+ products for clients across India, Dubai and beyond, while working as a
+                  Full-Stack Developer at Bizsun Creative and pursuing my MCA at Aligarh Muslim University.
                 </p>
               </div>
+              <ul className="mt-8 space-y-2.5">
+                {keyAchievements.map((line) => (
+                  <li key={line} className="flex gap-3 text-sm leading-relaxed text-foreground/75 sm:text-[15px]">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-violet-400 to-cyan-300" />
+                    {line}
+                  </li>
+                ))}
+              </ul>
               <ul className="mt-8 flex flex-wrap gap-2">
                 {POINTS.map((point) => (
                   <li key={point} className="chip px-3 py-1.5 text-xs text-foreground/80">
@@ -54,7 +71,9 @@ export function About() {
               <Reveal key={item.label} delay={i * 0.06} className="h-full">
                 <TiltCard className="h-full">
                   <GlassCard className="flex h-full flex-col justify-end p-5 sm:p-6">
-                    <p className="text-gradient text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">{item.value}</p>
+                    <p className="text-gradient text-2xl font-semibold leading-tight tabular-nums tracking-tight sm:text-3xl">
+                      <CountUp value={item.value} />
+                    </p>
                     <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted">{item.label}</p>
                   </GlassCard>
                 </TiltCard>

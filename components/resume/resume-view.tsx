@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Download, Printer } from 'lucide-react'
 import { resume } from '@/data/resume'
+import { formatPeriod } from '@/data/experience'
 import { toTelHref } from '@/lib/links'
 import { Reveal } from '@/components/ui/reveal'
 import { TechIcon } from '@/components/ui/tech-icon'
@@ -57,6 +58,7 @@ export function ResumeView() {
               <a href={toTelHref(resume.header.phone)} className="hover:text-foreground">{resume.header.phone}</a>
               <a href={resume.header.github} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">GitHub</a>
               <a href={resume.header.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">LinkedIn</a>
+              <a href={resume.header.company.url} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">DevSphere Solutions</a>
             </div>
           </header>
 
@@ -83,7 +85,7 @@ export function ResumeView() {
                 <div key={job.company}>
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <h3 className="text-base font-medium">{job.role}</h3>
-                    <p className="font-mono text-xs text-muted">{job.startDate} – {job.endDate}</p>
+                    <p className="font-mono text-xs text-muted">{formatPeriod(job)}</p>
                   </div>
                   <p className="mt-1 text-sm text-muted">{job.company} · {job.location}</p>
                   <ul className="mt-3 space-y-1.5 text-sm leading-relaxed text-foreground/85">
@@ -99,9 +101,19 @@ export function ResumeView() {
           <section className="mt-10">
             <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-violet-300 print:text-black">Selected Projects</h2>
             <div className="mt-5 space-y-5">
-              {resume.projects.slice(0, 4).map((project) => (
+              {resume.projects.slice(0, 6).map((project) => (
                 <div key={project.title}>
-                  <h3 className="text-sm font-medium">{project.title}</h3>
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <h3 className="text-sm font-medium">{project.title}</h3>
+                    <span className="flex gap-3 font-mono text-[11px] text-muted">
+                      {project.github && (
+                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">GitHub</a>
+                      )}
+                      {project.liveUrl && (
+                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">Live Demo</a>
+                      )}
+                    </span>
+                  </div>
                   <p className="text-xs text-muted">{project.category}</p>
                   <p className="mt-2 text-sm leading-relaxed text-foreground/85">{project.description}</p>
                   <p className="mt-2 font-mono text-[11px] text-muted">{project.technologies.join(' · ')}</p>
@@ -111,7 +123,7 @@ export function ResumeView() {
           </section>
 
           <section className="mt-10">
-            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-violet-300 print:text-black">Client Work</h2>
+            <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-violet-300 print:text-black">Client Work · DevSphere Solutions</h2>
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               {resume.clientProjects.map((client) => (
                 <div key={client.name} className="rounded-xl border border-white/[0.07] bg-white/[0.02] p-4">
@@ -151,10 +163,21 @@ export function ResumeView() {
 
           <section className="mt-10 border-t border-border pt-8">
             <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-violet-300 print:text-black">Education</h2>
-            <p className="mt-3 text-sm font-medium">{resume.education.degree}</p>
-            <p className="mt-1 text-sm text-muted">
-              {resume.education.location} · {resume.education.period} · {resume.education.status}
-            </p>
+            <div className="mt-3 space-y-4">
+              {resume.education.map((item) => (
+                <div key={item.short}>
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <p className="text-sm font-medium">
+                      {item.degree} ({item.short})
+                    </p>
+                    <p className="font-mono text-xs text-muted">{item.period}</p>
+                  </div>
+                  <p className="mt-1 text-sm text-muted">
+                    {item.institution} · {item.location}
+                  </p>
+                </div>
+              ))}
+            </div>
           </section>
         </article>
       </Reveal>

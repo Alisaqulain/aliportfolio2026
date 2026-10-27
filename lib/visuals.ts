@@ -2,18 +2,22 @@ import type { LucideIcon } from 'lucide-react'
 import {
   Bot,
   Briefcase,
+  Building2,
   Cloud,
   FileText,
   FolderKanban,
+  GraduationCap,
   Home,
   Layers,
   Mail,
   MessageCircle,
+  Puzzle,
   Sparkles,
   TrainFront,
   TrendingUp,
   User,
   Video,
+  Workflow,
 } from 'lucide-react'
 
 export type ProjectVisual = {
@@ -24,6 +28,24 @@ export type ProjectVisual = {
 }
 
 export const PROJECT_VISUALS: Record<string, ProjectVisual> = {
+  'batchx-amu': {
+    icon: GraduationCap,
+    accent: '#14B8A6',
+    gradient: 'from-teal-500/20 via-teal-500/5 to-transparent',
+    initials: 'BX',
+  },
+  'flowforge-ai': {
+    icon: Workflow,
+    accent: '#A855F7',
+    gradient: 'from-purple-500/20 via-purple-500/5 to-transparent',
+    initials: 'FF',
+  },
+  devforge: {
+    icon: Puzzle,
+    accent: '#0EA5E9',
+    gradient: 'from-sky-500/20 via-sky-500/5 to-transparent',
+    initials: 'DF',
+  },
   'ali-gpt': {
     icon: Bot,
     accent: '#10A37F',
@@ -62,18 +84,32 @@ export const PROJECT_VISUALS: Record<string, ProjectVisual> = {
   },
 }
 
-export const CLIENT_VISUALS: Record<string, { initials: string; accent: string; gradient: string }> = {
-  AutoExcelPro: { initials: 'AE', accent: '#2563EB', gradient: 'from-blue-500/20 to-transparent' },
-  'Dunex Dubai': { initials: 'DD', accent: '#0EA5E9', gradient: 'from-sky-500/20 to-transparent' },
-  MPCPCT: { initials: 'MP', accent: '#8B5CF6', gradient: 'from-violet-500/20 to-transparent' },
-  'Digital Career Center': { initials: 'DC', accent: '#F97316', gradient: 'from-orange-500/20 to-transparent' },
-  'Vega Wealth Dubai': { initials: 'VW', accent: '#D4AF37', gradient: 'from-yellow-500/20 to-transparent' },
+export const CLIENT_ACCENTS: Record<string, string> = {
+  LaptopSecure: '#3B82F6',
+  'Marina Muse International': '#D4AF37',
+  'The Vega Wealth': '#C9A227',
+  'Chacha Mobile CRM': '#F97316',
+  'Krishi Kutumb': '#22C55E',
+  'Dunex Dubai': '#0EA5E9',
+  'AS Job Placement & Finance': '#6366F1',
+  'Fixigo Repair': '#EF4444',
+  'Royal Metro EV': '#10B981',
+  'Crossline Cricket Stadium': '#84CC16',
+  MPCPCT: '#8B5CF6',
+  'Digital Career Center': '#F59E0B',
+  'Auto Excel Pro': '#16A34A',
+  'Info Gates': '#06B6D4',
+}
+
+export function getClientAccent(name: string) {
+  return CLIENT_ACCENTS[name] ?? '#a78bfa'
 }
 
 export const PAGE_ICONS: Record<string, LucideIcon> = {
   About: User,
   Experience: Briefcase,
   Projects: FolderKanban,
+  DevSphere: Building2,
   Skills: Layers,
   Resume: FileText,
   Contact: Mail,
@@ -82,7 +118,7 @@ export const PAGE_ICONS: Record<string, LucideIcon> = {
 export const CAPABILITY_ICONS: Record<string, LucideIcon> = {
   'Full-Stack Products': Layers,
   'AI-Powered Applications': Sparkles,
-  'Real-Time Systems': Video,
+  'Real-Time & Distributed': Video,
   'Mobile Applications': MessageCircle,
   'Business Platforms': Briefcase,
   'Deployment & Infrastructure': Cloud,
@@ -109,4 +145,9 @@ export function getDomainFromUrl(url: string) {
 export function getFaviconUrl(url: string, size = 128) {
   const domain = getDomainFromUrl(url)
   return `https://www.google.com/s2/favicons?domain=${domain}&sz=${size}`
+}
+
+/** Live screenshot of a public site (WordPress mShots — free, cached, no key) */
+export function getScreenshotUrl(url: string, width = 1200) {
+  return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=${width}&h=${Math.round(width * 0.625)}`
 }

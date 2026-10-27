@@ -8,6 +8,7 @@ import { HomeTechGrid } from '@/components/home/home-tech-grid'
 import { HomeProcess } from '@/components/home/home-process'
 import { HomeExperience } from '@/components/home/home-experience'
 import { HomeClients } from '@/components/home/home-clients'
+import { HomeDevSphere } from '@/components/home/home-devsphere'
 import { HomeCTA } from '@/components/home/home-cta'
 import { SEO, SITE } from '@/lib/constants'
 
@@ -30,10 +31,11 @@ export default function HomePage() {
       <TechMarquee />
       <HomeCapabilities />
       <HomeFeatured />
+      <HomeDevSphere />
+      <HomeClients />
       <HomeTechGrid />
       <HomeProcess />
       <HomeExperience />
-      <HomeClients />
       <HomeCTA />
     </PageShell>
   )

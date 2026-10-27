@@ -1,9 +1,12 @@
 import { cn } from '@/lib/utils'
 import { getProjectVisual, type ProjectVisual } from '@/lib/visuals'
 
-type Kind = 'chat' | 'video' | 'chart' | 'listing'
+type Kind = 'chat' | 'video' | 'chart' | 'listing' | 'flow' | 'code' | 'app'
 
 const KIND: Record<string, Kind> = {
+  'batchx-amu': 'app',
+  'flowforge-ai': 'flow',
+  devforge: 'code',
   'ali-gpt': 'chat',
   chatapp: 'chat',
   'apna-video-call': 'video',
@@ -22,6 +25,94 @@ type ProjectPreviewProps = {
 }
 
 function Screen({ kind, accent }: { kind: Kind; accent: string }) {
+  if (kind === 'flow') {
+    const nodes = [
+      { x: 8, y: 18, w: 26 },
+      { x: 40, y: 8, w: 24 },
+      { x: 40, y: 54, w: 24 },
+      { x: 72, y: 30, w: 22 },
+    ]
+    return (
+      <div className="relative h-full">
+        <svg viewBox="0 0 100 80" className="absolute inset-0 h-full w-full" preserveAspectRatio="none" aria-hidden>
+          {[
+            'M34 26 C38 26 36 16 40 16',
+            'M34 26 C38 26 36 62 40 62',
+            'M64 16 C68 16 68 38 72 38',
+            'M64 62 C68 62 68 38 72 38',
+          ].map((d) => (
+            <path key={d} d={d} fill="none" stroke={accent} strokeOpacity="0.6" strokeWidth="0.8" strokeDasharray="2 1.5" vectorEffect="non-scaling-stroke" />
+          ))}
+        </svg>
+        {nodes.map((n, i) => (
+          <div
+            key={i}
+            className="absolute flex h-[22%] items-center gap-1 rounded-md border px-1.5"
+            style={{
+              left: `${n.x}%`,
+              top: `${n.y}%`,
+              width: `${n.w}%`,
+              borderColor: i === 3 ? accent : 'rgba(255,255,255,0.12)',
+              background: i === 3 ? `${accent}30` : 'rgba(255,255,255,0.05)',
+            }}
+          >
+            <span className="h-2 w-2 shrink-0 rounded-sm" style={{ background: i === 0 ? '#22d3ee' : accent }} />
+            <span className="h-1 flex-1 rounded bg-white/20" />
+          </div>
+        ))}
+      </div>
+    )
+  }
+  if (kind === 'code') {
+    const lines = [
+      [12, 30],
+      [20, 46, 18],
+      [20, 24],
+      [28, 40, 14],
+      [28, 34],
+      [20, 10],
+      [12, 52],
+    ]
+    return (
+      <div className="flex h-full">
+        <div className="w-[18%] space-y-1.5 border-r border-white/[0.06] p-2">
+          {[60, 80, 50, 70, 40].map((w, i) => (
+            <div key={i} className="h-1.5 rounded bg-white/10" style={{ width: `${w}%`, ...(i === 1 ? { background: `${accent}88` } : {}) }} />
+          ))}
+        </div>
+        <div className="flex-1 space-y-2 p-3">
+          {lines.map((segs, i) => (
+            <div key={i} className="flex gap-1.5" style={{ paddingLeft: `${segs[0] - 12}%` }}>
+              {segs.slice(1).map((w, j) => (
+                <div key={j} className="h-1.5 rounded" style={{ width: `${w}%`, background: j === 0 && i % 2 ? `${accent}aa` : 'rgba(255,255,255,0.14)' }} />
+              ))}
+            </div>
+          ))}
+          <div className="ml-auto mt-3 w-3/5 rounded-md border p-1.5" style={{ borderColor: `${accent}66`, background: `${accent}14` }}>
+            <div className="h-1.5 w-4/5 rounded bg-white/20" />
+            <div className="mt-1 h-1.5 w-3/5 rounded bg-white/15" />
+          </div>
+        </div>
+      </div>
+    )
+  }
+  if (kind === 'app') {
+    return (
+      <div className="flex h-full items-end justify-center gap-3 pt-3">
+        {[0, 1].map((p) => (
+          <div key={p} className="flex h-[92%] w-[30%] flex-col gap-1.5 rounded-t-xl border border-b-0 border-white/10 bg-white/[0.03] p-2">
+            <div className="h-6 rounded-md" style={{ background: `${accent}55` }} />
+            {[0, 1, 2].map((r) => (
+              <div key={r} className="flex items-center gap-1.5 rounded-md bg-white/[0.06] p-1.5">
+                <div className="h-3 w-3 rounded-full" style={{ background: r === p ? accent : 'rgba(255,255,255,0.2)' }} />
+                <div className="h-1 flex-1 rounded bg-white/20" />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    )
+  }
   if (kind === 'chat') {
     return (
       <div className="flex h-full flex-col justify-end gap-2 p-4">

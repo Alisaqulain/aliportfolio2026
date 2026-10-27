@@ -1,8 +1,7 @@
-import { SITE, SOCIAL } from '@/lib/constants'
-import { skillCategories } from '@/data/skills'
+import { DEVSPHERE, SITE, SOCIAL } from '@/lib/constants'
+import { education, keyAchievements, skillCategories } from '@/data/skills'
 import { experience } from '@/data/experience'
 import { projects, clientProjects } from '@/data/projects'
-import { education } from '@/data/skills'
 
 export const resume = {
   header: {
@@ -14,28 +13,28 @@ export const resume = {
     phone: SITE.phone,
     github: SOCIAL.github,
     linkedin: SOCIAL.linkedin,
+    portfolio: SITE.url,
+    company: DEVSPHERE,
   },
   summary:
-    'Forward Deployed Engineer and Full-Stack Systems Developer focused on turning business requirements into production-ready web, mobile, and AI-powered products. Experienced across the full product lifecycle — from system design and development to deployment and client delivery in India and Dubai.',
+    'Results-driven Forward Deployed Engineer and Full-Stack Systems Developer — and Founder of DevSphere Solutions — building and shipping production-grade web, mobile and AI-powered applications for clients across India and Dubai. Specialised in Next.js, React, Node.js, TypeScript, MongoDB and AI integrations, with end-to-end ownership spanning requirements gathering, system architecture, development, deployment and client delivery. Strong focus on scalable backend architecture, API integrations, background job processing and cloud deployment.',
   experience,
   projects: projects.map((p) => ({
     title: p.title,
     category: p.category,
     technologies: p.technologies,
     description: p.description,
+    github: p.github,
+    liveUrl: p.liveUrl,
   })),
   clientProjects: clientProjects.map((p) => ({
     name: p.name,
     category: p.category,
     website: p.website,
     technologies: p.technologies,
+    devsphere: p.devsphere,
   })),
   skills: skillCategories,
   education,
-  highlights: [
-    '15+ production applications delivered',
-    'India + Dubai client delivery',
-    'End-to-end product ownership',
-    'Web + Mobile + AI engineering',
-  ],
+  highlights: keyAchievements,
 } as const

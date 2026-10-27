@@ -20,7 +20,7 @@ export default function ProjectsPage() {
             Things I&apos;ve <span className="text-gradient">built &amp; shipped.</span>
           </>
         }
-        description="Personal builds across AI, real-time communication and fintech — plus production systems for clients."
+        description="AI automation platforms, developer tools, campus apps and real-time systems — plus 14 production client platforms, most shipped through DevSphere Solutions."
       />
       <Projects />
       <ClientProjects />

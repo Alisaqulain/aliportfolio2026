@@ -30,6 +30,16 @@ export function ProjectBlock({ project, index = 0 }: { project: Project; index?:
           </div>
           <h3 className="mt-5 text-3xl font-semibold tracking-tight sm:text-4xl">{project.title}</h3>
           <p className="mt-4 text-[15px] leading-relaxed text-muted">{project.description}</p>
+          {project.highlights && (
+            <ul className="mt-5 space-y-2">
+              {project.highlights.map((line) => (
+                <li key={line} className="flex gap-3 text-sm leading-relaxed text-foreground/75">
+                  <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: visual.accent }} />
+                  {line}
+                </li>
+              ))}
+            </ul>
+          )}
           <div className="mt-6 flex flex-wrap gap-1.5">
             {project.technologies.map((tech) => (
               <span key={tech} className="chip">

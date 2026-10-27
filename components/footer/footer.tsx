@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { ArrowUpRight, Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
-import { NAV_LINKS, SITE, SOCIAL } from '@/lib/constants'
+import { ArrowUpRight, Building2, Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
+import { DEVSPHERE, NAV_LINKS, SITE, SOCIAL } from '@/lib/constants'
 import { isValidHref, toTelHref } from '@/lib/links'
 import { BrandLogo } from '@/components/ui/brand-logo'
 
@@ -71,6 +71,19 @@ export function Footer() {
             <Link href="/contact" className="btn btn-secondary mt-6">
               Start a project <ArrowUpRight size={15} />
             </Link>
+            <a
+              href={DEVSPHERE.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 flex max-w-xs items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.02] px-4 py-3 transition-colors hover:border-white/20"
+            >
+              <Building2 size={18} className="shrink-0 text-violet-300" />
+              <span className="min-w-0 flex-1">
+                <span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-muted">Founder of</span>
+                <span className="block truncate text-sm text-foreground">{DEVSPHERE.name}</span>
+              </span>
+              <ArrowUpRight size={15} className="shrink-0 text-muted" />
+            </a>
           </div>
         </div>
 

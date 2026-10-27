@@ -3,20 +3,23 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ArrowUpRight, Github, Linkedin } from 'lucide-react'
+import { ArrowUpRight, Github, Linkedin, Search } from 'lucide-react'
 import { BrandLogo } from '@/components/ui/brand-logo'
-import { NAV_LINKS, SOCIAL } from '@/lib/constants'
+import { openCommandPalette } from '@/components/ui/command-palette'
+import { DEVSPHERE, NAV_LINKS, SOCIAL } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
 export function Navbar() {
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [isMac, setIsMac] = useState(true)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
+    setIsMac(/Mac|iPhone|iPad/.test(navigator.platform))
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
@@ -42,7 +45,7 @@ export function Navbar() {
       >
         <div
           className={cn(
-            'mx-auto flex h-14 max-w-wide items-center justify-between rounded-full border pl-4 pr-2 transition-[background-color,border-color,box-shadow] duration-500 sm:pl-5',
+            'mx-auto flex h-14 max-w-wide items-center justify-between gap-3 rounded-full border pl-4 pr-2 transition-[background-color,border-color,box-shadow] duration-500 sm:pl-5',
             scrolled || open
               ? 'border-white/[0.08] bg-[#0a0a12]/85 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.8)] backdrop-blur-md'
               : 'border-transparent bg-transparent',
@@ -50,47 +53,61 @@ export function Navbar() {
         >
           <BrandLogo size="sm" />
 
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Primary">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 aria-current={isActive(link.href) ? 'page' : undefined}
                 className={cn(
-                  'relative rounded-full px-4 py-2 text-sm transition-colors duration-300',
+                  'relative rounded-full px-3.5 py-2 text-sm transition-colors duration-300',
                   isActive(link.href)
                     ? 'bg-white/[0.07] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
                     : 'text-muted hover:text-foreground',
                 )}
               >
                 {link.label}
+                {isActive(link.href) && (
+                  <span className="absolute inset-x-4 -bottom-px h-px bg-gradient-to-r from-transparent via-violet-300 to-transparent" aria-hidden />
+                )}
               </Link>
             ))}
           </nav>
 
-          <div className="hidden items-center gap-2 lg:flex">
-            <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="icon-btn h-10 w-10 border-transparent bg-transparent">
-              <Github size={17} />
-            </a>
-            <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="icon-btn h-10 w-10 border-transparent bg-transparent">
-              <Linkedin size={17} />
-            </a>
-            <Link href="/contact" className="btn btn-primary ml-1 min-h-[40px] px-5">
-              Let&apos;s Build <ArrowUpRight size={15} />
-            </Link>
-          </div>
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={openCommandPalette}
+              aria-label="Search (command palette)"
+              className="flex h-10 items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 text-sm text-muted transition-colors hover:border-white/20 hover:text-foreground"
+            >
+              <Search size={15} />
+              <kbd className="hidden font-mono text-[10px] tracking-wider sm:inline">{isMac ? '⌘K' : 'Ctrl K'}</kbd>
+            </button>
+            <div className="hidden items-center gap-1 xl:flex">
+              <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="icon-btn h-10 w-10 border-transparent bg-transparent">
+                <Github size={17} />
+              </a>
+              <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="icon-btn h-10 w-10 border-transparent bg-transparent">
+                <Linkedin size={17} />
+              </a>
+              <Link href="/contact" className="btn btn-primary ml-1 min-h-[40px] px-5">
+                Hire me <ArrowUpRight size={15} />
+              </Link>
+            </div>
 
-          <button
-            type="button"
-            className="relative flex h-11 w-11 items-center justify-center rounded-full text-foreground lg:hidden"
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span className={cn('absolute h-[1.5px] w-5 bg-current transition-transform duration-300', open ? 'rotate-45' : '-translate-y-[4px]')} />
-            <span className={cn('absolute h-[1.5px] w-5 bg-current transition-transform duration-300', open ? '-rotate-45' : 'translate-y-[4px]')} />
-          </button>
+            <button
+              type="button"
+              className="relative flex h-11 w-11 items-center justify-center rounded-full text-foreground xl:hidden"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              onClick={() => setOpen((v) => !v)}
+            >
+              <span className={cn('absolute h-[1.5px] w-5 bg-current transition-transform duration-300', open ? 'rotate-45' : '-translate-y-[4px]')} />
+              <span className={cn('absolute h-[1.5px] w-5 bg-current transition-transform duration-300', open ? '-rotate-45' : 'translate-y-[4px]')} />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -98,14 +115,14 @@ export function Navbar() {
       <div
         id="mobile-nav"
         className={cn(
-          'fixed inset-0 z-40 bg-[#05050a]/95 transition-[opacity,visibility] duration-300 lg:hidden',
+          'fixed inset-0 z-40 bg-[#05050a]/95 transition-[opacity,visibility] duration-300 xl:hidden',
           open ? 'visible opacity-100' : 'invisible pointer-events-none opacity-0',
         )}
         onClick={() => setOpen(false)}
       >
         <nav
           aria-label="Mobile"
-          className="flex h-full flex-col justify-between px-6 pb-10"
+          className="flex h-full flex-col justify-between overflow-y-auto px-6 pb-10"
           style={{ paddingTop: 'calc(6rem + env(safe-area-inset-top))' }}
           onClick={(e) => e.stopPropagation()}
         >
@@ -119,7 +136,7 @@ export function Navbar() {
                 <Link
                   href={link.href}
                   className={cn(
-                    'flex items-center justify-between border-b border-white/[0.06] py-4 text-3xl font-semibold tracking-tight',
+                    'flex items-center justify-between border-b border-white/[0.06] py-3.5 text-3xl font-semibold tracking-tight',
                     isActive(link.href) ? 'text-gradient' : 'text-foreground/80',
                   )}
                 >
@@ -130,16 +147,30 @@ export function Navbar() {
             ))}
           </ul>
 
-          <div className="flex items-center gap-3 safe-bottom">
-            <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="icon-btn">
-              <Github size={18} />
+          <div className="mt-8 space-y-4 safe-bottom">
+            <a
+              href={DEVSPHERE.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm"
+            >
+              <span>
+                <span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-muted">Founder of</span>
+                <span className="text-foreground">{DEVSPHERE.name}</span>
+              </span>
+              <ArrowUpRight size={16} className="text-muted" />
             </a>
-            <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="icon-btn">
-              <Linkedin size={18} />
-            </a>
-            <Link href="/contact" className="btn btn-primary flex-1">
-              Let&apos;s Build
-            </Link>
+            <div className="flex items-center gap-3">
+              <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="icon-btn">
+                <Github size={18} />
+              </a>
+              <a href={SOCIAL.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="icon-btn">
+                <Linkedin size={18} />
+              </a>
+              <Link href="/contact" className="btn btn-primary flex-1">
+                Hire me
+              </Link>
+            </div>
           </div>
         </nav>
       </div>

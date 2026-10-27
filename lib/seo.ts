@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SEO, SITE } from '@/lib/constants'
+import { DEVSPHERE, SEO, SITE, SOCIAL } from '@/lib/constants'
 
 type PageMetaOptions = {
   title: string
@@ -33,9 +33,7 @@ export function createPageMetadata({ title, description, path }: PageMetaOptions
 }
 
 export function getPersonJsonLd() {
-  const socialLinks = [process.env.NEXT_PUBLIC_GITHUB_URL, process.env.NEXT_PUBLIC_LINKEDIN_URL].filter(
-    (u): u is string => typeof u === 'string' && u.length > 0 && !u.includes('PLACEHOLDER'),
-  )
+  const socialLinks = [SOCIAL.github, SOCIAL.linkedin, DEVSPHERE.url]
 
   return {
     '@context': 'https://schema.org',
@@ -52,6 +50,11 @@ export function getPersonJsonLd() {
         email: `mailto:${SITE.email}`,
         telephone: SITE.phone,
         jobTitle: SITE.title,
+        worksFor: { '@id': `${SITE.url}/#devsphere` },
+        alumniOf: [
+          { '@type': 'CollegeOrUniversity', name: 'Aligarh Muslim University' },
+          { '@type': 'CollegeOrUniversity', name: 'Maa Shakumbhari University' },
+        ],
         description: SEO.description,
         address: {
           '@type': 'PostalAddress',
@@ -68,9 +71,23 @@ export function getPersonJsonLd() {
           'Full-Stack Development',
           'Forward Deployed Engineering',
           'AI Integration',
+          'LLM Applications',
+          'Redis',
+          'BullMQ',
+          'WebRTC',
           'Mobile Development',
           'Cloud Deployment',
         ],
+      },
+      {
+        '@type': 'Organization',
+        '@id': `${SITE.url}/#devsphere`,
+        name: DEVSPHERE.name,
+        url: DEVSPHERE.url,
+        email: DEVSPHERE.email,
+        description: DEVSPHERE.tagline,
+        founder: { '@id': `${SITE.url}/#person` },
+        areaServed: [...DEVSPHERE.markets],
       },
       {
         '@type': 'WebSite',

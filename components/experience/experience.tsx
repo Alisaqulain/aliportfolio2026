@@ -1,5 +1,5 @@
-import { Calendar, MapPin } from 'lucide-react'
-import { experience, type ExperienceItem } from '@/data/experience'
+import { ArrowUpRight, Calendar, MapPin } from 'lucide-react'
+import { experience, formatPeriod, type ExperienceItem } from '@/data/experience'
 import { cn } from '@/lib/utils'
 import { Section } from '@/components/ui/section'
 import { Reveal } from '@/components/ui/reveal'
@@ -29,12 +29,33 @@ export function Timeline({ items, compact, className }: { items: ExperienceItem[
               <GlassCard glow={current} as="article" className="p-6 sm:p-8">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">{item.role}</h3>
-                    <p className="mt-1 text-base text-gradient">{item.company}</p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">{item.role}</h3>
+                      <span
+                        className={cn(
+                          'chip',
+                          item.type === 'Founder' && 'border-amber-300/30 bg-amber-400/10 text-amber-200',
+                        )}
+                      >
+                        {item.type}
+                      </span>
+                    </div>
+                    {item.website ? (
+                      <a
+                        href={item.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-1 inline-flex items-center gap-1 text-base text-gradient hover:opacity-80"
+                      >
+                        {item.company} <ArrowUpRight size={14} className="text-violet-300" />
+                      </a>
+                    ) : (
+                      <p className="mt-1 text-base text-gradient">{item.company}</p>
+                    )}
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <span className="chip">
-                      <Calendar size={11} /> {item.startDate} – {item.endDate}
+                      <Calendar size={11} /> {formatPeriod(item)}
                     </span>
                     <span className="chip">
                       <MapPin size={11} /> {item.location}

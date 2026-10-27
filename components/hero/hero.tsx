@@ -1,16 +1,20 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, ArrowUpRight, Github, Linkedin, Mail, MapPin } from 'lucide-react'
-import { SITE, SOCIAL } from '@/lib/constants'
+import { ArrowRight, ArrowUpRight, Building2, Github, Linkedin, Mail, MapPin } from 'lucide-react'
+import { DEVSPHERE, SITE, SOCIAL } from '@/lib/constants'
 import { TechIcon } from '@/components/ui/tech-icon'
+import { CountUp } from '@/components/ui/count-up'
+import { RotatingText } from '@/components/ui/rotating-text'
 import { HeroSceneLazy } from '@/components/3d/hero-scene-lazy'
 
 const STATS = [
   { value: '15+', label: 'Production apps' },
-  { value: '2', label: 'Countries served' },
-  { value: '30+', label: 'Technologies' },
+  { value: '13+', label: 'Agency client builds' },
+  { value: '40+', label: 'Technologies' },
   { value: '3+', label: 'Years building' },
 ]
+
+const ROLES = ['AI-powered products', 'SaaS platforms', 'real-time systems', 'mobile apps', 'client websites']
 
 const FLOATING = [
   { name: 'Next.js', label: 'Next.js', className: 'right-[30%] top-[22%]', delay: '0s' },
@@ -58,20 +62,29 @@ export function Hero() {
       <div className="relative flex min-h-[100svh] flex-col justify-end px-4 pb-12 pt-[54svh] sm:px-8 sm:pb-16 lg:justify-center lg:px-12 lg:pb-20 lg:pt-32">
         <div className="container-wide">
           <div className="hero-in max-w-2xl">
-            <div className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pl-1.5 pr-4">
-              <Image
-                src="/images/avatar.svg"
-                alt={SITE.name}
-                width={28}
-                height={28}
-                className="h-7 w-7 rounded-full border border-white/10"
-                priority
-              />
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping-ring absolute inline-flex h-full w-full rounded-full bg-emerald-400" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-              </span>
-              <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted">{SITE.title}</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pl-1.5 pr-4">
+                <Image
+                  src="/images/avatar.svg"
+                  alt={SITE.name}
+                  width={28}
+                  height={28}
+                  className="h-7 w-7 rounded-full border border-white/10"
+                  priority
+                />
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping-ring absolute inline-flex h-full w-full rounded-full bg-emerald-400" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                </span>
+                <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted">{SITE.title}</span>
+              </div>
+              <Link
+                href="/devsphere"
+                className="group inline-flex items-center gap-2 rounded-full border border-violet-400/25 bg-violet-500/10 px-3.5 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-violet-100 transition-colors hover:border-violet-300/50"
+              >
+                <Building2 size={13} /> Founder · {DEVSPHERE.name}
+                <ArrowUpRight size={12} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
             </div>
 
             <h1 className="mt-6 text-[clamp(3rem,11vw,7.5rem)] font-semibold leading-[0.9] tracking-[-0.055em]">
@@ -80,8 +93,9 @@ export function Hero() {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-foreground/80 sm:text-xl">
-              I build <span className="text-foreground">scalable web, mobile &amp; AI products</span> — from first
-              requirement to production deploy.
+              I design, build &amp; ship{' '}
+              <RotatingText words={ROLES} className="font-medium text-foreground" />
+              <br className="hidden sm:block" /> — from first requirement to production deploy.
             </p>
 
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-5 text-sm text-muted">
@@ -118,7 +132,9 @@ export function Hero() {
             {STATS.map((stat) => (
               <div key={stat.label} className="flex flex-col-reverse bg-[#07070d]/90 px-4 py-4 sm:px-5">
                 <dt className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">{stat.label}</dt>
-                <dd className="text-2xl font-semibold tracking-tight sm:text-3xl">{stat.value}</dd>
+                <dd className="text-2xl font-semibold tabular-nums tracking-tight sm:text-3xl">
+                  <CountUp value={stat.value} />
+                </dd>
               </div>
             ))}
           </dl>
