@@ -6,10 +6,15 @@ const SESSION_MAX_AGE = 24 * 60 * 60 // 24 hours
 function getSessionSecret() {
   const secret = process.env.MCA_SESSION_SECRET || process.env.MCA_DASHBOARD_PASSWORD
   if (!secret) {
-    throw Object.assign(new Error('Missing session configuration.'), {
-      code: 'CONFIG_ERROR',
-      status: 503,
-    })
+    throw Object.assign(
+      new Error(
+        'MCA_SESSION_SECRET / MCA_DASHBOARD_PASSWORD is missing. Add them to .env.local and restart npm run dev.'
+      ),
+      {
+        code: 'CONFIG_ERROR',
+        status: 503,
+      }
+    )
   }
   return secret
 }
@@ -17,10 +22,15 @@ function getSessionSecret() {
 function getDashboardPassword() {
   const password = process.env.MCA_DASHBOARD_PASSWORD
   if (!password) {
-    throw Object.assign(new Error('Missing dashboard password configuration.'), {
-      code: 'CONFIG_ERROR',
-      status: 503,
-    })
+    throw Object.assign(
+      new Error(
+        'MCA_DASHBOARD_PASSWORD is not set. Add it to .env.local and restart npm run dev.'
+      ),
+      {
+        code: 'CONFIG_ERROR',
+        status: 503,
+      }
+    )
   }
   return password
 }

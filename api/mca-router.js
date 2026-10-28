@@ -13,6 +13,13 @@ import googleAuth from './_handlers/google/auth.js'
 import googleCallback from './_handlers/google/callback.js'
 import { sendError } from './lib/errors.js'
 
+// Keep multipart bodies as raw streams so PPT/DOCX/etc uploads parse correctly.
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
+
 const routes = {
   'POST auth/login': login,
   'POST auth/logout': logout,

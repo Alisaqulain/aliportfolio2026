@@ -64,7 +64,8 @@ export function handleApiError(res, error, fallback = 'Something went wrong.') {
       : error?.code === 'NOT_FOUND'
         ? 'Resource not found.'
         : error?.code === 'CONFIG_ERROR'
-          ? 'Service is not configured.'
+          ? error?.message ||
+            'Service is not configured. Add MCA env vars to .env.local and restart the API.'
           : fallback
   sendError(res, error?.status || 500, message)
 }

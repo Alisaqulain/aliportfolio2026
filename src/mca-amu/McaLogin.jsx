@@ -34,6 +34,8 @@ const McaLogin = ({ onLoginSuccess }) => {
         setError('Unable to reach the MCA API. On Vercel, add MCA env vars and redeploy — no separate server is needed.')
       } else if (err.code === 'AUTH') {
         setError('Invalid password. Try again.')
+      } else if (/not set|not configured|missing|\.env\.local/i.test(err.message || '')) {
+        setError(err.message)
       } else {
         setError(err.message || 'Unable to sign in.')
       }

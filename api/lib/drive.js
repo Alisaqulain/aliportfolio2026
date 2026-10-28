@@ -9,10 +9,15 @@ function getRootFolderId() {
   const raw = process.env.GOOGLE_DRIVE_FOLDER_ID
   const folderId = normalizeFolderId(raw || '')
   if (!folderId) {
-    throw Object.assign(new Error('Missing Google Drive folder configuration.'), {
-      code: 'CONFIG_ERROR',
-      status: 503,
-    })
+    throw Object.assign(
+      new Error(
+        'GOOGLE_DRIVE_FOLDER_ID is missing. Add your Drive folder ID to .env.local and restart the API.'
+      ),
+      {
+        code: 'CONFIG_ERROR',
+        status: 503,
+      }
+    )
   }
   return folderId
 }
@@ -314,14 +319,16 @@ export async function deleteItem(fileId) {
 export async function uploadFile(parentId, fileName, mimeType, buffer) {
   await assertFolderAccess(parentId)
   const drive = getDriveClient()
+  const resolvedMime = mimeType || 'application/octet-stream'
 
   const { data } = await drive.files.create({
     requestBody: {
       name: fileName,
       parents: [parentId],
+      mimeType: resolvedMime,
     },
     media: {
-      mimeType: mimeType || 'application/octet-stream',
+      mimeType: resolvedMime,
       body: bufferToStream(buffer),
     },
     fields: 'id,name,mimeType,size,modifiedTime,webViewLink',
@@ -332,9 +339,7 @@ export async function uploadFile(parentId, fileName, mimeType, buffer) {
 }
 
 function bufferToStream(buffer) {
-  const stream = new Readable()
-  stream.push(buffer)
-  stream.push(null)
+  const stream = Readable.from(Buffer.isBuffer(buffer) ? buffer : Buffer.from(buffer))
   return stream
 }
 

@@ -107,16 +107,24 @@ export const mcaApi = {
       }
 
       xhr.onload = () => {
+        let data = {}
         try {
-          const data = JSON.parse(xhr.responseText)
-          if (xhr.status >= 200 && xhr.status < 300) {
-            resolve(data)
-          } else {
-            reject(new Error(data.error || 'Upload failed.'))
-          }
+          data = JSON.parse(xhr.responseText || '{}')
         } catch {
-          reject(new Error('Upload failed.'))
+          data = {}
         }
+
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(data)
+          return
+        }
+
+        if (xhr.status === 413) {
+          reject(new Error(data.error || 'File is too large to upload.'))
+          return
+        }
+
+        reject(new Error(data.error || `Upload failed (${xhr.status}).`))
       }
 
       xhr.onerror = () => reject(new Error('Network error during upload.'))
