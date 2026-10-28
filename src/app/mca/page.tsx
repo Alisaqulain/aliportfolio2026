@@ -3,7 +3,8 @@ import { McaShell } from '@/components/mca/mca-shell'
 
 export const metadata: Metadata = {
   title: 'MCA Drive — Private',
-  robots: { index: false, follow: false },
+  description: 'Private MCA Drive dashboard.',
+  robots: { index: false, follow: false, nocache: true },
 }
 
 export default function McaPage() {

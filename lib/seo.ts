@@ -5,30 +5,55 @@ type PageMetaOptions = {
   title: string
   description: string
   path: string
+  keywords?: string[]
+  absolute?: boolean
+  noIndex?: boolean
 }
 
-export function createPageMetadata({ title, description, path }: PageMetaOptions): Metadata {
-  const url = `${SITE.url}${path}`
+export function createPageMetadata({
+  title,
+  description,
+  path,
+  keywords = [],
+  absolute = false,
+  noIndex = false,
+}: PageMetaOptions): Metadata {
+  const url = path === '/' ? SITE.url : `${SITE.url}${path}`
+  const ogTitle = absolute ? title : `${title} | ${SITE.name}`
 
   return {
-    title,
+    title: absolute ? { absolute: title } : title,
     description,
+    keywords: keywords.length ? [...SEO.keywords, ...keywords] : undefined,
     alternates: { canonical: url },
     openGraph: {
-      title: `${title} | ${SITE.name}`,
+      title: ogTitle,
       description,
       url,
       siteName: SITE.name,
       type: 'website',
       locale: 'en_IN',
-      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: `${SITE.name} — ${title}` }],
+      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: ogTitle }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${title} | ${SITE.name}`,
+      title: ogTitle,
       description,
       images: ['/opengraph-image'],
     },
+    robots: noIndex
+      ? { index: false, follow: false, nocache: true }
+      : {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+            'max-video-preview': -1,
+          },
+        },
   }
 }
 
@@ -44,7 +69,7 @@ export function getPersonJsonLd() {
         name: SITE.name,
         givenName: 'Ali',
         familyName: 'Saqulain',
-        alternateName: ['Ali Saqulain Developer', 'Ali Saqulain Portfolio'],
+        alternateName: ['Ali Saqulain Developer', 'Ali Saqulain Portfolio', 'Ali Saqulain Full Stack'],
         url: SITE.url,
         image: `${SITE.url}/images/avatar.svg`,
         email: `mailto:${SITE.email}`,
@@ -77,6 +102,8 @@ export function getPersonJsonLd() {
           'WebRTC',
           'Mobile Development',
           'Cloud Deployment',
+          'SEO Optimization',
+          'SaaS Development',
         ],
       },
       {
@@ -88,6 +115,7 @@ export function getPersonJsonLd() {
         description: DEVSPHERE.tagline,
         founder: { '@id': `${SITE.url}/#person` },
         areaServed: [...DEVSPHERE.markets],
+        knowsAbout: [...DEVSPHERE.services],
       },
       {
         '@type': 'WebSite',
@@ -98,6 +126,11 @@ export function getPersonJsonLd() {
         description: SEO.description,
         inLanguage: 'en-IN',
         publisher: { '@id': `${SITE.url}/#person` },
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: `${SITE.url}/projects`,
+          'query-input': 'required name=search_term_string',
+        },
       },
       {
         '@type': 'ProfilePage',
@@ -107,6 +140,18 @@ export function getPersonJsonLd() {
         description: SEO.description,
         isPartOf: { '@id': `${SITE.url}/#website` },
         mainEntity: { '@id': `${SITE.url}/#person` },
+        about: { '@id': `${SITE.url}/#person` },
+      },
+      {
+        '@type': 'ProfessionalService',
+        '@id': `${SITE.url}/#services`,
+        name: `${SITE.name} — Full-Stack Engineering`,
+        url: SITE.url,
+        image: `${SITE.url}/opengraph-image`,
+        description: SEO.description,
+        provider: { '@id': `${SITE.url}/#person` },
+        areaServed: ['India', 'Dubai', 'Oman', 'Global'],
+        serviceType: [...DEVSPHERE.services],
       },
     ],
   }
@@ -120,7 +165,30 @@ export function getBreadcrumbJsonLd(items: { name: string; path: string }[]) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: `${SITE.url}${item.path}`,
+      item: item.path === '/' ? SITE.url : `${SITE.url}${item.path}`,
+    })),
+  }
+}
+
+export function getProjectsItemListJsonLd(
+  projects: { name: string; description: string; url?: string }[]
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Ali Saqulain — Featured Projects & Client Work',
+    description: 'Production systems, SaaS platforms and client products shipped by Ali Saqulain.',
+    numberOfItems: projects.length,
+    itemListElement: projects.map((project, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'CreativeWork',
+        name: project.name,
+        description: project.description,
+        ...(project.url ? { url: project.url } : {}),
+        author: { '@id': `${SITE.url}/#person` },
+      },
     })),
   }
 }

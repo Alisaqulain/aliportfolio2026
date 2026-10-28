@@ -10,19 +10,15 @@ import { HomeExperience } from '@/components/home/home-experience'
 import { HomeClients } from '@/components/home/home-clients'
 import { HomeDevSphere } from '@/components/home/home-devsphere'
 import { HomeCTA } from '@/components/home/home-cta'
-import { SEO, SITE } from '@/lib/constants'
+import { SEO } from '@/lib/constants'
+import { createPageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: SEO.title,
   description: SEO.description,
-  alternates: { canonical: SITE.url },
-  openGraph: {
-    title: SEO.ogTitle,
-    description: SEO.description,
-    url: SITE.url,
-    type: 'website',
-  },
-}
+  path: '/',
+  absolute: true,
+})
 
 export default function HomePage() {
   return (

@@ -3,7 +3,8 @@ import { EnvCheckPanel } from '@/components/check/env-check-panel'
 
 export const metadata: Metadata = {
   title: 'Environment Check',
-  robots: { index: false, follow: false },
+  robots: { index: false, follow: false, nocache: true },
+  alternates: { canonical: undefined },
 }
 
 export default function CheckPage() {

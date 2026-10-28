@@ -5,7 +5,8 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: `${SITE.name} — Portfolio`,
     short_name: SITE.name,
-    description: 'Official portfolio of Ali Saqulain, Forward Deployed Engineer and Full-Stack Systems Developer.',
+    description:
+      'Official portfolio of Ali Saqulain — Forward Deployed Engineer, Full-Stack Systems Developer and Founder of DevSphere Solutions.',
     start_url: '/',
     display: 'standalone',
     background_color: '#070708',

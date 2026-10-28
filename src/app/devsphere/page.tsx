@@ -13,14 +13,21 @@ import { HomeCTA } from '@/components/home/home-cta'
 import { CountUp } from '@/components/ui/count-up'
 import { DEVSPHERE } from '@/lib/constants'
 import { toTelHref } from '@/lib/links'
-import { createPageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/json-ld'
+import { createPageMetadata, getBreadcrumbJsonLd, getProjectsItemListJsonLd } from '@/lib/seo'
 import { clientProjects } from '@/data/projects'
 
 export const metadata: Metadata = createPageMetadata({
-  title: 'DevSphere Solutions — Founder',
+  title: 'DevSphere Solutions',
   description:
     'Ali Saqulain is the founder of DevSphere Solutions — a full-stack agency shipping websites, SaaS, e-commerce, mobile apps and dashboards for clients in India, Dubai, Oman and globally.',
   path: '/devsphere',
+  keywords: [
+    'DevSphere Solutions',
+    'DevSphere Solutions founder',
+    'Ali Saqulain agency',
+    'web development agency India',
+  ],
 })
 
 const SERVICE_ICONS = [Code2, Layers, Sparkles, ShoppingCart, Smartphone, LayoutDashboard]
@@ -34,6 +41,18 @@ const SERVICE_COPY = [
 ]
 
 export default function DevSpherePage() {
+  const breadcrumbs = getBreadcrumbJsonLd([
+    { name: 'Home', path: '/' },
+    { name: 'DevSphere', path: '/devsphere' },
+  ])
+  const clientList = getProjectsItemListJsonLd(
+    clientProjects.map((p) => ({
+      name: p.name,
+      description: p.description,
+      url: p.website,
+    }))
+  )
+
   const stats = [
     { value: `${clientProjects.filter((c) => c.devsphere).length}+`, label: 'Products shipped' },
     { value: String(DEVSPHERE.markets.length), label: 'Markets served' },
@@ -43,6 +62,8 @@ export default function DevSpherePage() {
 
   return (
     <PageShell>
+      <JsonLd data={breadcrumbs} />
+      <JsonLd data={clientList} />
       <PageHero
         label={`Founder · ${DEVSPHERE.name}`}
         title={
