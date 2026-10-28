@@ -4,7 +4,7 @@ import { sendJson, sendError, handleApiError } from '../../lib/errors.js'
 import { validateFolderId, validateFileName } from '../../lib/validation.js'
 import { uploadFile } from '../../lib/drive.js'
 
-const MAX_FILE_BYTES = 45 * 1024 * 1024 // stay under typical serverless body limits with headroom
+const MAX_FILE_BYTES = 100 * 1024 * 1024 // 100 MB per file
 const MAX_FILES = 20
 
 const EXT_MIME = {
@@ -216,7 +216,11 @@ export default async function handler(req, res) {
     if (
       /request entity too large|payload too large|body exceeded/i.test(error?.message || '')
     ) {
-      return sendError(res, 413, 'File is too large to upload.')
+      return sendError(
+        res,
+        413,
+        `File is too large to upload. Max size is ${Math.floor(MAX_FILE_BYTES / (1024 * 1024))} MB.`
+      )
     }
     handleApiError(res, error, 'Upload failed.')
   }

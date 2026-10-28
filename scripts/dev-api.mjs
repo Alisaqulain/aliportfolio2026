@@ -93,6 +93,11 @@ const server = http.createServer(async (req, res) => {
 })
 
 const PORT = 3001
+// Allow large MCA Drive uploads (up to 100 MB) without premature timeouts.
+server.requestTimeout = 15 * 60 * 1000
+server.headersTimeout = 16 * 60 * 1000
+server.timeout = 15 * 60 * 1000
+
 server.on('error', (error) => {
   if (error.code === 'EADDRINUSE') {
     console.log(`MCA API already running on http://localhost:${PORT} — using existing server.`)

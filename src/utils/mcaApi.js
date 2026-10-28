@@ -1,4 +1,5 @@
 const API_BASE = '/api/mca'
+export const MCA_MAX_UPLOAD_BYTES = 100 * 1024 * 1024 // keep in sync with api/_handlers/drive/upload.js
 
 export class McaApiError extends Error {
   constructor(message, code = 'UNKNOWN') {
@@ -92,13 +93,26 @@ export const mcaApi = {
 
   uploadFiles: (parentId, files, onProgress) => {
     return new Promise((resolve, reject) => {
+      const fileList = Array.from(files || [])
+      const maxMb = Math.floor(MCA_MAX_UPLOAD_BYTES / (1024 * 1024))
+      const tooLarge = fileList.find((file) => file.size > MCA_MAX_UPLOAD_BYTES)
+      if (tooLarge) {
+        reject(
+          new Error(
+            `"${tooLarge.name}" is too large (${formatFileSize(tooLarge.size)}). Max size is ${maxMb} MB.`
+          )
+        )
+        return
+      }
+
       const formData = new FormData()
       formData.append('parentId', parentId)
-      Array.from(files).forEach((file) => formData.append('files', file))
+      fileList.forEach((file) => formData.append('files', file))
 
       const xhr = new XMLHttpRequest()
       xhr.open('POST', `${API_BASE}/drive/upload`)
       xhr.withCredentials = true
+      xhr.timeout = 10 * 60 * 1000
 
       xhr.upload.onprogress = (event) => {
         if (event.lengthComputable && onProgress) {
@@ -120,7 +134,9 @@ export const mcaApi = {
         }
 
         if (xhr.status === 413) {
-          reject(new Error(data.error || 'File is too large to upload.'))
+          reject(
+            new Error(data.error || `File is too large to upload. Max size is ${maxMb} MB.`)
+          )
           return
         }
 
@@ -129,6 +145,7 @@ export const mcaApi = {
 
       xhr.onerror = () => reject(new Error('Network error during upload.'))
       xhr.onabort = () => reject(new Error('Upload cancelled.'))
+      xhr.ontimeout = () => reject(new Error('Upload timed out. Try a smaller file or check your connection.'))
       xhr.send(formData)
 
       return xhr
