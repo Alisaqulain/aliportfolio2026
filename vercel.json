@@ -8,8 +8,8 @@
   ],
   "functions": {
     "api/mca-router.js": {
-      "maxDuration": 300,
-      "memory": 3008
+      "maxDuration": 60,
+      "memory": 1024
     }
   }
 }
